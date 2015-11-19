@@ -1,0 +1,7 @@
+Files you will have to modify to run locally
+
+submit-list.php
+	Change filepath. Must remain absolute due to PHP errors.
+
+submit-party.php
+	Edit the mysqli entry at the top to reflect your own server/database
