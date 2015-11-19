@@ -1,7 +1,7 @@
 <?php
 
 //mysqli('servername', 'username', 'password', 'database')
-$mysqli = new mysqli("localhost", "", "password", "partylog");
+$mysqli = new mysqli("localhost", "websys", "websys", "partylog");
 
 
 $q = "('";
