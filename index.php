@@ -1,117 +1,8 @@
 <html>
 <head>
+	<title>Party Log - Index</title>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-	<style>
-		.date {
-			margin: 25px 0;
-			font: 30px verdana, arial, sans-serif;
-			text-align: center;
-			width: 367px;
-		}
-
-		.submit {
-			width: 367px;
-			text-align: center;
-		}
-
-		input[type=checkbox] {
-			visibility: hidden;
-		}
-
-		/* ROUNDED ONE */
-		.roundedOne {
-			width: 28px;
-			height: 28px;
-			background: #fcfff4;
-
-			background: -webkit-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
-			background: -moz-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
-			background: -o-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
-			background: -ms-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
-			background: linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
-			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfff4', endColorstr='#b3bead',GradientType=0 );
-
-			margin: 10px 100px;
-			-webkit-border-radius: 50px;
-			-moz-border-radius: 50px;
-			border-radius: 50px;
-
-			-webkit-box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5);
-			-moz-box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5);
-			box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5);
-			position: relative;
-		}
-
-		.roundedOne label {
-			cursor: pointer;
-			position: absolute;
-			width: 20px;
-			height: 20px;
-
-			-webkit-border-radius: 50px;
-			-moz-border-radius: 50px;
-			border-radius: 50px;
-			left: 4px;
-			top: 4px;
-
-			-webkit-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,1);
-			-moz-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,1);
-			box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,1);
-
-			background: -webkit-linear-gradient(top, #222 0%, #45484d 100%);
-			background: -moz-linear-gradient(top, #222 0%, #45484d 100%);
-			background: -o-linear-gradient(top, #222 0%, #45484d 100%);
-			background: -ms-linear-gradient(top, #222 0%, #45484d 100%);
-			background: linear-gradient(top, #222 0%, #45484d 100%);
-			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#222', endColorstr='#45484d',GradientType=0 );
-		}
-
-		.roundedOne label:before {
-			position: absolute;
-			left: -100px;
-			content: "Over 21?";
-			font: 20px verdana, arial, sans-serif;
-		}
-
-		.roundedOne label:after {
-			-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-			filter: alpha(opacity=0);
-			opacity: 0;
-			content: '';
-			position: absolute;
-			width: 16px;
-			height: 16px;
-			background: #00bf00;
-
-			background: -webkit-linear-gradient(top, #00bf00 0%, #009400 100%);
-			background: -moz-linear-gradient(top, #00bf00 0%, #009400 100%);
-			background: -o-linear-gradient(top, #00bf00 0%, #009400 100%);
-			background: -ms-linear-gradient(top, #00bf00 0%, #009400 100%);
-			background: linear-gradient(top, #00bf00 0%, #009400 100%);
-
-			-webkit-border-radius: 50px;
-			-moz-border-radius: 50px;
-			border-radius: 50px;
-			top: 2px;
-			left: 2px;
-
-			-webkit-box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5);
-			-moz-box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5);
-			box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5);
-		}
-
-		.roundedOne label:hover::after {
-			-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
-			filter: alpha(opacity=30);
-			opacity: 0.3;
-		}
-
-		.roundedOne input[type=checkbox]:checked + label:after {
-			-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
-			filter: alpha(opacity=100);
-			opacity: 1;
-		}
-	</style>
+    <link rel="stylesheet" type="text/css" href="resources/css/index.css">
 </head>
 
 <body>
@@ -142,7 +33,7 @@
 		</select>
 	</div>
 
-	<div class="ui-widget" style="margin-top: 10px;">
+	<div id="fraternity" class="ui-widget" style="margin-top: 10px;">
 		<label for="fraternity">Fraternity: </label>
 		<select name="fraternity" style="width: 266px;">
 			<option value="None">Non-Greek</option>
@@ -191,50 +82,8 @@
 
 </body>
 
-<script src="../js/jquery-1.11.2.min.js"></script>
+<script src="resources/js/jquery-1.7.1.js"></script>
 <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-<script src="list.js"></script>
-<script>
-    $(function() {
-        $( "#name" ).autocomplete({
-            source: names
-        });
-    });
-</script>
-
-<script>
-    $(document).ready(function(){
-        $(".skipEnter").keypress(function(event) {
-            if(event.keyCode == 13) {
-                var textboxes = $("input.skipEnter");
-                var currentBoxNumber = textboxes.index(this);
-
-                if (textboxes[currentBoxNumber + 1] != null) {
-                    var nextBox = textboxes[currentBoxNumber + 1];
-                    nextBox.focus();
-                    nextBox.select();
-                    event.preventDefault();
-                    return false;
-                }
-            }
-        });
-    });
-
-    function validate(formObj) {
-        if (formObj.name.value == "") {
-            alert("You must enter a name");
-            formObj.name.focus();
-            return false;
-        }
-
-        if (formObj.school.value == "-") {
-            alert("You must select a school");
-            formObj.school.focus();
-            return false;
-        }
-
-        return true;
-    }
-</script>
-
+<!-- <script src="list.js"></script>
+ --><script type="text/javascript" src="resources/js/index.js"></script>
 </html>
