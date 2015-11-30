@@ -19,6 +19,7 @@ $(document).ready(function(){
             }
         }
     });
+    
     $("#fraternity").hide();
     $(".school").change(function () {
         var select = $('.school option:selected').text();

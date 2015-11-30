@@ -3,9 +3,17 @@
 	<title>Party Log - Index</title>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="resources/css/index.css">
+    <link rel="shortcut icon" href="resources/media/redSoloCup.ico">
 </head>
 
 <body>
+
+<menu>
+	<div id="title"><em>Party Log</em></div>
+	<div>Login</div>
+	<div>Contact</div>
+	<div>Help</div>
+</menu>
 
 <form action="submit-party.php" method="post" onsubmit="return validate(this);">
 
@@ -15,12 +23,12 @@
 		?>
 	</div>
 
-    <div class="ui-widget" style="margin-top: 10px;">
+    <div class="ui-widget">
         <label for="name">Name: </label>
         <input name="name" id="name" class="skipEnter" style="width: 300px;">
     </div>
 
-	<div class="ui-widget" style="margin-top: 10px;">
+	<div class="ui-widget">
 		<label for="school">School:</label>
 		<select name="school" class="school" style="width: 294px;">
 			<option vslue="-">-</option>
@@ -33,7 +41,7 @@
 		</select>
 	</div>
 
-	<div id="fraternity" class="ui-widget" style="margin-top: 10px;">
+	<div id="fraternity" class="ui-widget">
 		<label for="fraternity">Fraternity: </label>
 		<select name="fraternity" style="width: 266px;">
 			<option value="None">Non-Greek</option>

@@ -4,15 +4,34 @@ body {
 	background-size: cover;
 }
 
+menu {
+	position: fixed;
+	top: 0;
+    left: 0;
+    width: 300px;
+    border: 3px solid #000;
+    background-color: #E4E4E4;
+    margin: 0 0 0 0;
+    padding: 0 0 0 20;
+}
+
+menu div {
+	display: inline-block;
+	margin: 0 5 0 5;
+}
+
+menu #title {
+	
+}
+
 form {
 	background-color: #E4E4E4;
 	border-style: solid;
 	border-radius: 25px;
 	border-width: 1px;
 	padding: 5px;
-	margin: 1000px, 25px, 25px, 10px;
-	width: 723px;
-	margin: 0 auto;
+	width: 722px;
+	margin: 290px auto;
 	text-align: center;
 }
 
@@ -21,6 +40,14 @@ form {
 	font: 30px verdana, arial, sans-serif;
 	text-align: center;
 	width: 367px;
+}
+
+.ui-widget {
+	margin-top: 10px;
+}
+
+#fraternity {
+	display: none;
 }
 
 .submit {
