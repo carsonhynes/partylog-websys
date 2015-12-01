@@ -1,5 +1,4 @@
 #splash {
-	background: url("../media/whiteSoloCup.png");
 	background-color: black;
 	background-size: fixed;
 	background-attachment: fixed;
@@ -16,35 +15,77 @@
     min-height: 360px;
 
     z-index: 2;
-
-    /*-webkit-animation: mymove 5s infinite;  Chrome, Safari, Opera 
-    animation: mymove 5s infinite;*/
 }
-
-/* Chrome, Safari, Opera */
-/*@-webkit-keyframes mymove {
-    from {height: 0}
-    to {height: 100%}
-}
-
-@keyframes mymove {
-    from {height: 0}
-    to {height: 100%}
-}*/
 
 #splash h2 {
 	position: relative;
-	z-index: 2;
-	color: gray;
+	z-index: 4;
+	color: #383838;
 	font-size: 90px;
 	font-family: 'Oxygen', sans-serif;
 }
 
-#black {
+.wave{
 	z-index: 3;
-	background-color: black;
-	bottom: 0;
+ 	display:inline-block;
+	background: url("../media/whiteSoloCup.png");
+
+height:100%;
+  width:100px;
+  position:absolute;
+  -webkit-animation-name:             dostuff; 
+  -webkit-animation-duration:         6s; 
+  -webkit-animation-iteration-count:  1;
+  -webkit-transition-timing-function: ease-in-out;
+  -webkit-animation-fill-mode: both;
+	background-size: fixed;
+	background-attachment: fixed;
+	background-repeat: no-repeat;
+	background-position: center;
+
+    position:fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
     left: 0;
+    text-align: center;
+}
+
+
+@-webkit-keyframes dostuff{
+  0%{
+    height:0%;
+  }
+  10%{
+    height:35%;
+  }
+  20%{
+    height:14%;
+  }
+  30%{
+    height:28%;
+  }
+  40%{
+    height:36%;
+  }
+  50%{ 
+    height:42%;
+  }
+  60%{
+    height:51%;
+  }
+  70%{
+    height:65%;
+  }
+  80%{
+    height:63%;
+  }
+  90%{
+    height:78%;
+  }
+  100%{ 
+    height:90%;
+  }
 }
 
 body {

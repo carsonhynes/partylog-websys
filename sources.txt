@@ -1,0 +1,8 @@
+Wave example~
+https://codepen.io/loktar00/pen/kfrKC
+
+Red solo cup~
+http://green.olemiss.edu/wp-content/uploads/sites/92/2014/05/red-solo-cup.jpg
+
+Animation tutorial~
+http://www.smashingmagazine.com/2011/05/an-introduction-to-css3-keyframe-animations/

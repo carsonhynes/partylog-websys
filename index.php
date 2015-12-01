@@ -14,8 +14,8 @@
 	<h2 class="welcome">Welcome to Party Log</h2>
 </div>
 
-<div id="black"></div>
-
+<!-- <div id="black"></div>
+ -->
 <menu>
 	<div id="title"><strong>Party Log</strong></div>
 	<div>Login</div>
