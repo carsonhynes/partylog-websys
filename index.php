@@ -3,13 +3,21 @@
 	<title>Party Log - Index</title>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="resources/css/index.css">
+    <link href='https://fonts.googleapis.com/css?family=Oxygen:400,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
     <link rel="shortcut icon" href="resources/media/redSoloCup.ico">
 </head>
 
 <body>
 
+<div id="splash">
+	<h2 class="welcome">Welcome to Party Log</h2>
+</div>
+
+<div id="black"></div>
+
 <menu>
-	<div id="title"><em>Party Log</em></div>
+	<div id="title"><strong>Party Log</strong></div>
 	<div>Login</div>
 	<div>Contact</div>
 	<div>Help</div>
@@ -19,6 +27,7 @@
 
 	<div class='date'>
 		<?php
+			date_default_timezone_set("America/New_York");
 			echo date("F jS, Y");
 		?>
 	</div>
@@ -31,7 +40,7 @@
 	<div class="ui-widget">
 		<label for="school">School:</label>
 		<select name="school" class="school" style="width: 294px;">
-			<option vslue="-">-</option>
+			<option vslue=""></option>
 			<option value="RPI">RPI</option>
 			<option value="Sage">Sage</option>
 			<option value="UAlbany">UAlbany</option>
@@ -87,6 +96,16 @@
         <button style="margin-top: 10px" type="submit">Submit</button>
 	</div>
 </form>
+
+<footer>
+	<div>
+		<?php
+			date_default_timezone_set("America/New_York");
+			$year = date('Y');
+			echo "&copy; $year All rights reserved.";
+		?>
+	</div>
+</footer>
 
 </body>
 

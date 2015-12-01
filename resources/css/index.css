@@ -1,7 +1,57 @@
+#splash {
+	background: url("../media/whiteSoloCup.png");
+	background-color: black;
+	background-size: fixed;
+	background-attachment: fixed;
+	background-repeat: no-repeat;
+	background-position: center;
+
+    position:fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    text-align: center;
+
+    min-height: 360px;
+
+    z-index: 2;
+
+    /*-webkit-animation: mymove 5s infinite;  Chrome, Safari, Opera 
+    animation: mymove 5s infinite;*/
+}
+
+/* Chrome, Safari, Opera */
+/*@-webkit-keyframes mymove {
+    from {height: 0}
+    to {height: 100%}
+}
+
+@keyframes mymove {
+    from {height: 0}
+    to {height: 100%}
+}*/
+
+#splash h2 {
+	position: relative;
+	z-index: 2;
+	color: gray;
+	font-size: 90px;
+	font-family: 'Oxygen', sans-serif;
+}
+
+#black {
+	z-index: 3;
+	background-color: black;
+	bottom: 0;
+    left: 0;
+}
+
 body {
 	background-image: url("../media/Greek Letters Painted-01.jpg");
 	background-position: center;
 	background-size: cover;
+	z-index: -1;
 }
 
 menu {
@@ -9,19 +59,23 @@ menu {
 	top: 0;
     left: 0;
     width: 300px;
-    border: 3px solid #000;
-    background-color: #E4E4E4;
     margin: 0 0 0 0;
-    padding: 0 0 0 20;
+    padding: 9 0 9 20;
+
+    z-index: -1;
+
+    background-color: #E4E4E4;
+
+    border: 1px solid #000;
+    border-bottom-right-radius: 25px;
+
+	text-align: center;
 }
 
 menu div {
 	display: inline-block;
 	margin: 0 5 0 5;
-}
-
-menu #title {
-	
+	font-family: 'Oxygen', sans-serif;
 }
 
 form {
@@ -31,13 +85,22 @@ form {
 	border-width: 1px;
 	padding: 5px;
 	width: 722px;
-	margin: 290px auto;
+	margin: 260px auto 0;
 	text-align: center;
+}
+
+form div {
+	font-family: 'Source Sans Pro', sans-serif;
+	font-size: 30px;
+}
+
+form label {
+	font-family: 'Source Sans Pro', sans-serif;
+	font-size: 30px;
 }
 
 .date {
 	margin: 25px 0;
-	font: 30px verdana, arial, sans-serif;
 	text-align: center;
 	width: 367px;
 }
@@ -150,4 +213,17 @@ input[type=checkbox] {
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
 	filter: alpha(opacity=100);
 	opacity: 1;
+}
+
+footer {
+	position: absolute;
+	bottom: 0;
+    right: 0;
+
+    z-index: -1;
+
+	background-color: #E4E4E4;
+
+	text-align: center;
+	font-family: 'Oxygen', sans-serif;
 }

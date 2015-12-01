@@ -19,7 +19,13 @@ $(document).ready(function(){
             }
         }
     });
-    
+
+    $("#splash").click(function() {
+        $("#splash").slideUp("800", function() {
+            $("#menu,form,#footer").delay(100).animate({"opacity":"1.0"},8000);
+        });
+    });
+
     $("#fraternity").hide();
     $(".school").change(function () {
         var select = $('.school option:selected').text();
