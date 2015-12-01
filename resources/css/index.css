@@ -15,6 +15,8 @@
     min-height: 360px;
 
     z-index: 2;
+
+    display: none;
 }
 
 #splash h2 {
@@ -29,15 +31,14 @@
 	z-index: 3;
  	display:inline-block;
 	background: url("../media/whiteSoloCup.png");
-
-height:100%;
-  width:100px;
-  position:absolute;
-  -webkit-animation-name:             dostuff; 
-  -webkit-animation-duration:         6s; 
-  -webkit-animation-iteration-count:  1;
-  -webkit-transition-timing-function: ease-in-out;
-  -webkit-animation-fill-mode: both;
+	height:100%;
+  	width:100px;
+  	position:absolute;
+  	-webkit-animation-name:             dostuff; 
+  	-webkit-animation-duration:         6s; 
+  	-webkit-animation-iteration-count:  1;
+  	-webkit-transition-timing-function: ease-in-out;
+  	-webkit-animation-fill-mode: both;
 	background-size: fixed;
 	background-attachment: fixed;
 	background-repeat: no-repeat;
@@ -54,37 +55,37 @@ height:100%;
 
 @-webkit-keyframes dostuff{
   0%{
-    height:0%;
+    height:30%;
   }
   10%{
     height:35%;
   }
   20%{
-    height:14%;
-  }
-  30%{
-    height:28%;
-  }
-  40%{
-    height:36%;
-  }
-  50%{ 
     height:42%;
   }
-  60%{
-    height:51%;
+  30%{
+    height:49%;
   }
-  70%{
-    height:65%;
+  40%{
+    height:55%;
   }
-  80%{
+  50%{ 
     height:63%;
   }
+  60%{
+    height:76%;
+  }
+  70%{
+    height:82%;
+  }
+  80%{
+    height:88%;
+  }
   90%{
-    height:78%;
+    height:94%;
   }
   100%{ 
-    height:90%;
+    height:100%;
   }
 }
 

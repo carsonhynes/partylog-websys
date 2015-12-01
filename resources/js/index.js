@@ -5,6 +5,37 @@
  //    });
 
 $(document).ready(function(){
+
+    var COOKIE_NAME = 'splash-page-cookie-test2';
+    $go = $.cookie(COOKIE_NAME);
+    if ($go == null) {
+        console.log("null");
+        $.cookie(COOKIE_NAME, 'test', { path: '/', expires: 6 });
+        $("#splash").toggle();
+        var ocean = document.getElementById("splash"),
+        waveWidth = 10,
+        waveCount = Math.floor(window.innerWidth/waveWidth),
+        docFrag = document.createDocumentFragment();
+
+        for(var i = 0; i < waveCount; i++){
+          var wave = document.createElement("div");
+          wave.className += " wave";
+          docFrag.appendChild(wave);
+          wave.style.left = i * waveWidth + "px";
+          wave.style.webkitAnimationDelay = (i/1000) + "s";
+        }
+
+        ocean.appendChild(docFrag);
+
+        setTimeout(function() {
+            $("#splash").slideUp("800", function() {
+                $("#menu,form,#footer").delay(100).animate({"opacity":"1.0"},8000);
+            });
+        },4000);
+    }
+    else {
+    }
+
     $(".skipEnter").keypress(function(event) {
         if(event.keyCode == 13) {
             var textboxes = $("input.skipEnter");
@@ -20,33 +51,10 @@ $(document).ready(function(){
         }
     });
 
-    $("#splash").click(function() {
-        var ocean = document.getElementById("splash"),
-        waveWidth = 10,
-        waveCount = Math.floor(window.innerWidth/waveWidth),
-        docFrag = document.createDocumentFragment();
-
-        for(var i = 0; i < waveCount; i++){
-          var wave = document.createElement("div");
-          wave.className += " wave";
-          docFrag.appendChild(wave);
-          wave.style.left = i * waveWidth + "px";
-          wave.style.webkitAnimationDelay = (i/100) + "s";
-        }
-
-        ocean.appendChild(docFrag);
-
-        setTimeout(function() {
-            $("#splash").slideUp("800", function() {
-                $("#menu,form,#footer").delay(100).animate({"opacity":"1.0"},8000);
-            });
-        },4000);
-    });
-
     $("#fraternity").hide();
     $(".school").change(function () {
         var select = $('.school option:selected').text();
-        if (select == "RPI") {
+        if (select = "RPI") {
             $("#fraternity").toggle();
         }
         else {

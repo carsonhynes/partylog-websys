@@ -14,8 +14,6 @@
 	<h2 class="welcome">Welcome to Party Log</h2>
 </div>
 
-<!-- <div id="black"></div>
- -->
 <menu>
 	<div id="title"><strong>Party Log</strong></div>
 	<div>Login</div>
@@ -113,4 +111,5 @@
 <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <!-- <script src="list.js"></script>
  --><script type="text/javascript" src="resources/js/index.js"></script>
+ <script type="text/javascript" src="resources/js/carhartl-jquery-cookie-92b7715/jquery.cookie.js" ></script>
 </html>
