@@ -1,39 +1,6 @@
 <html>
 <head>
-	<style>
-		h1, h2, div {
-			text-align: center;
-		}
-
-		h1 {
-			margin: 25px auto;
-		}
-
-		.guidelines {
-			width: 500px;
-			text-align: left;
-			margin: 0 auto 25px auto;
-		}
-
-		.instructions {
-			width: 500px;
-			text-align: left;
-			margin: 0 auto;
-		}
-
-		body {
-			width: 800px;
-			margin: 0 auto;
-		}
-
-		.example-image {
-			text-align: center;
-		}
-
-		form {
-			margin-top: 100px;
-		}
-	</style>
+	<link rel="stylesheet" href="resources/css/upload.css">
 </head>
 
 <body>

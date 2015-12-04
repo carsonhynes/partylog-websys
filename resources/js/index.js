@@ -5,22 +5,13 @@
  //    });
 
 $(document).ready(function(){
-    $(".skipEnter").keypress(function(event) {
-        if(event.keyCode == 13) {
-            var textboxes = $("input.skipEnter");
-            var currentBoxNumber = textboxes.index(this);
 
-            if (textboxes[currentBoxNumber + 1] != null) {
-                var nextBox = textboxes[currentBoxNumber + 1];
-                nextBox.focus();
-                nextBox.select();
-                event.preventDefault();
-                return false;
-            }
-        }
-    });
-
-    $("#splash").click(function() {
+    var COOKIE_NAME = 'splash-page-cookie-test2';
+    $go = $.cookie(COOKIE_NAME);
+    if ($go == null) {
+        console.log("null");
+        $.cookie(COOKIE_NAME, 'test', { path: '/', expires: 6 });
+        $("#splash").toggle();
         var ocean = document.getElementById("splash"),
         waveWidth = 10,
         waveCount = Math.floor(window.innerWidth/waveWidth),
@@ -38,19 +29,36 @@ $(document).ready(function(){
 
         setTimeout(function() {
             $("#splash").slideUp("800", function() {
-                $("#menu,form,#footer").delay(100).animate({"opacity":"1.0"},8000);
+                $("#menu,form,#footer").delay(150).animate({"opacity":"1.0"},8000);
             });
-        },4000);
+        },40000);
+    }
+    else {
+    }
+
+    $(".skipEnter").keypress(function(event) {
+        if(event.keyCode == 13) {
+            var textboxes = $("input.skipEnter");
+            var currentBoxNumber = textboxes.index(this);
+
+            if (textboxes[currentBoxNumber + 1] != null) {
+                var nextBox = textboxes[currentBoxNumber + 1];
+                nextBox.focus();
+                nextBox.select();
+                event.preventDefault();
+                return false;
+            }
+        }
     });
 
     $("#fraternity").hide();
-    $(".school").change(function () {
-        var select = $('.school option:selected').text();
+    $("#school").change(function () {
+        var select = $('#school option:selected').text();
         if (select == "RPI") {
-            $("#fraternity").toggle();
+            $("#fraternity").show();
         }
         else {
-            $("#fraternity").toggle();
+            $("#fraternity").hide();
         }
     });
 
