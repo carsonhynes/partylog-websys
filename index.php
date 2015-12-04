@@ -38,6 +38,11 @@
     </div>
 
 	<div class="ui-widget">
+		<label for="phoneNumber">Phone Number</label>
+		<input type="text" name="phoneNumber" id="phoneNumber" placeholder="ex: 3855550168" required pattern="^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})$"/>
+	</div>
+
+	<div class="ui-widget">
 		<label for="school">School:</label>
 		<select name="school" class="school" style="width: 294px;">
 			<option vslue=""></option>
