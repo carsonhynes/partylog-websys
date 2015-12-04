@@ -4,6 +4,8 @@ $user = "websys";
 $pass = "websys";
 $query = "";
 
+$username = "Iota Tau";
+
 
 try {
 
@@ -22,6 +24,8 @@ try {
 							  `fraternity` text NOT NULL,
 							  `school` text NOT NULL,
 							  `over` text NOT NULL,
+							  `phone` int(11) DEFAULT NULL,
+  							  `username` text NOT NULL,
 							  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 							  PRIMARY KEY (`number`)
 							);');
@@ -30,34 +34,48 @@ try {
 
 	if (isset($_POST['date']) && $_POST['date'] != '') {
 		$date = date("Y-m-d", strtotime(substr($_POST['date'], 4)));
-		echo "You requested data from <strong>".date("F jS, Y", strtotime($date)).'</strong><br>';
-		$result = $dbh->prepare("SELECT * FROM party WHERE INSTR(`timestamp`, '$date') > 0");
+		echo "You requested data from <strong>".date("F jS, Y", strtotime($date)).'</strong><br><br>';
+		$date1 = date("Y-m-d", strtotime($date.' + 1 days'));
+		$date2 = date("Y-m-d", strtotime($date.' - 1 days'));
+		$result = $dbh->prepare("SELECT * FROM party WHERE
+									(INSTR(`timestamp`, '$date') > 0 OR
+									INSTR(`timestamp`, '$date1') > 0 OR
+									INSTR(`timestamp`, '$date2')) AND
+									`username` = '$username'");
 		$result->execute();
 
+		echo "Guest List<br>";
 		while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-			echo $row['name'] . ' ' . $row['fraternity'] . '<br>';
+			echo '<strong>Name:</strong> '.$row['name'].' <strong>Fraternity:</strong> '.$row['fraternity'].' <strong>School:</strong> '.$row['school'].' <strong>Age:</strong> '.$row['over'].' 21'.' <strong>Time of Arrival:</strong> '.substr($row['timestamp'],11).'<br>';
 		}
 	}
 
 	if (isset($_POST['frat']) && $_POST['frat'] != '') {
 		$frat = $_POST['frat'];
 		echo "You requested data about <strong>$frat</strong><br>";
-		$result = $dbh->prepare("SELECT * FROM party WHERE INSTR(`fraternity`, '$frat') > 0");
+		$result = $dbh->prepare("SELECT * FROM party WHERE INSTR(`fraternity`, '$frat') > 0 AND `username` = '$username'");
 		$result->execute();
 
 		while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-			echo $row['name'] . ' ' . $row['fraternity'] . '<br>';
+			echo '<strong>Name:</strong> '.$row['name'].' <strong>Fraternity:</strong> '.$row['fraternity'].' <strong>School:</strong> '.$row['school'].' <strong>Age:</strong> '.$row['over'].' 21'.' <strong>Time of Arrival:</strong> '.substr($row['timestamp'],11).'<br>';
 		}
 	}
 
 	if (isset($_POST['person']) && $_POST['person'] != '') {
 		$person = $_POST['person'];
-		echo "You requested data for <strong>$person</strong><br>";
-		$result = $dbh->prepare("SELECT * FROM party WHERE INSTR(`name`, '$person') > 0");
+		echo "You requested data for <strong>$person</strong><br><br>";
+		$result = $dbh->prepare("SELECT * FROM party WHERE INSTR(`name`, '$person') > 0 AND `username` = '$username'");
 		$result->execute();
 
+		$personBool = true;
+
 		while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-			echo $row['name'] . ' ' . $row['fraternity'] . '<br>';
+			if ($personBool == true) {
+				echo '<strong>Fraternity:</strong> ' . $row['fraternity'] . ' <strong>School:</strong> ' . $row['school'] . ' <strong>Age:</strong> ' . $row['over'] . ' 21' . '<br>';
+				$personBool = false;
+			}
+			echo '<strong>Dates Attended:</strong><br>';
+			echo date("F jS, Y", strtotime($row['timestamp']).'<br>');
 		}
 	}
 
