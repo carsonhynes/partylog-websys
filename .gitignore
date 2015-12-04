@@ -4,3 +4,6 @@
 .idea/partylog.iml
 .idea/vcs.xml
 .idea/workspace.xml
+.idea/dataSources.ids
+.idea/dataSources.local.xml
+.idea/dataSources.xml
