@@ -36,10 +36,11 @@
         <label for="name">Name: </label>
         <input name="name" id="name" class="skipEnter" style="width: 300px;">
     </div>
-	
-	<label for="phoneNumber">Phone Number
-       <input type="text" name="phoneNumber" id="phoneNumber" placeholder="ex: 3855550168" required pattern="^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})$"/>
-    </label>
+
+	<div class="ui-widget">
+		<label for="phoneNumber">Phone Number</label>
+		<input type="text" name="phoneNumber" id="phoneNumber" placeholder="ex: 3855550168" required pattern="^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})$"/>
+	</div>
 
 	<div class="ui-widget">
 		<label for="school">School:</label>

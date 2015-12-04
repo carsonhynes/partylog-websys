@@ -30,7 +30,7 @@ try {
 
 	if (isset($_POST['date']) && $_POST['date'] != '') {
 		$date = date("Y-m-d", strtotime(substr($_POST['date'], 4)));
-		echo '<h2>'.date("F jS, Y", strtotime($date)).'<br>'.'</h2>';
+		echo "You requested data from <strong>".date("F jS, Y", strtotime($date)).'</strong><br>';
 		$result = $dbh->prepare("SELECT * FROM party WHERE INSTR(`timestamp`, '$date') > 0");
 		$result->execute();
 
@@ -41,6 +41,7 @@ try {
 
 	if (isset($_POST['frat']) && $_POST['frat'] != '') {
 		$frat = $_POST['frat'];
+		echo "You requested data about <strong>$frat</strong><br>";
 		$result = $dbh->prepare("SELECT * FROM party WHERE INSTR(`fraternity`, '$frat') > 0");
 		$result->execute();
 
@@ -51,6 +52,7 @@ try {
 
 	if (isset($_POST['person']) && $_POST['person'] != '') {
 		$person = $_POST['person'];
+		echo "You requested data for <strong>$person</strong><br>";
 		$result = $dbh->prepare("SELECT * FROM party WHERE INSTR(`name`, '$person') > 0");
 		$result->execute();
 
