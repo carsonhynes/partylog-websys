@@ -6,6 +6,8 @@ $mysqli = new mysqli("localhost", "websys", "websys", "partylog");
 
 $q = "('";
 
+$username = "IotaTau";
+
 function test_input($data) {
 	$data = trim($data);
 	$data = stripslashes($data);
@@ -16,18 +18,20 @@ function test_input($data) {
 $q .= test_input($_POST["name"]) . "', '";
 $q .= test_input($_POST["fraternity"]) . "', '";
 $q .= test_input($_POST["school"]) . "', '";
+$q .= test_input($_POST["phoneNumber"]) . "', '";
+$q .= test_input($username) . "', '";
 
 if (test_input($_POST["over"] == NULL)) {
-	$q .= "Under', '";
+	$q .= "Under')";
 }
 
 else {
 	$q .= "Over')";
 }
 
-//echo $q;
+echo $q;
 
-$result = $mysqli->query("INSERT INTO party (name, fraternity, school, over) VALUES $q");
+$result = $mysqli->query("INSERT INTO party (name, fraternity, school, over, phoneNumber, username) VALUES $q");
 
 header("Location: index.php");
 
