@@ -22,16 +22,16 @@ $(document).ready(function(){
           wave.className += " wave";
           docFrag.appendChild(wave);
           wave.style.left = i * waveWidth + "px";
-          wave.style.webkitAnimationDelay = (i/1000) + "s";
+          wave.style.webkitAnimationDelay = (i/100) + "s";
         }
 
         ocean.appendChild(docFrag);
 
         setTimeout(function() {
             $("#splash").slideUp("800", function() {
-                $("#menu,form,#footer").delay(100).animate({"opacity":"1.0"},8000);
+                $("#menu,form,#footer").delay(150).animate({"opacity":"1.0"},8000);
             });
-        },4000);
+        },40000);
     }
     else {
     }
@@ -52,13 +52,13 @@ $(document).ready(function(){
     });
 
     $("#fraternity").hide();
-    $(".school").change(function () {
-        var select = $('.school option:selected').text();
-        if (select = "RPI") {
-            $("#fraternity").toggle();
+    $("#school").change(function () {
+        var select = $('#school option:selected').text();
+        if (select == "RPI") {
+            $("#fraternity").show();
         }
         else {
-            $("#fraternity").toggle();
+            $("#fraternity").hide();
         }
     });
 

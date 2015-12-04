@@ -5,13 +5,14 @@
     <link rel="stylesheet" type="text/css" href="resources/css/index.css">
     <link href='https://fonts.googleapis.com/css?family=Oxygen:400,700' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
-    <link rel="shortcut icon" href="resources/media/redSoloCup.ico">
+    <link rel="shortcut icon" href="resources/media/PL.ico">
 </head>
 
 <body>
 
 <div id="splash">
 	<h2 class="welcome">Welcome to Party Log</h2>
+	<img src="resources/media/PL.png">
 </div>
 
 <menu>
@@ -30,15 +31,16 @@
 		?>
 	</div>
 
+	<div id="wrapper">
     <div class="ui-widget">
         <label for="name">Name: </label>
-        <input name="name" id="name" class="skipEnter" style="width: 300px;">
+        <input name="name" id="name" class="skipEnter">
     </div>
 
 	<div class="ui-widget">
 		<label for="school">School:</label>
-		<select name="school" class="school" style="width: 294px;">
-			<option vslue=""></option>
+		<select name="school" id="school">
+			<option value=""></option>
 			<option value="RPI">RPI</option>
 			<option value="Sage">Sage</option>
 			<option value="UAlbany">UAlbany</option>
@@ -50,7 +52,7 @@
 
 	<div id="fraternity" class="ui-widget">
 		<label for="fraternity">Fraternity: </label>
-		<select name="fraternity" style="width: 266px;">
+		<select name="fraternity">
 			<option value="None">Non-Greek</option>
 			<option value="Acacia">Acacia</option>
 			<option value="Alpha Chi Rho">Alpha Chi Rho</option>
@@ -85,11 +87,17 @@
 		</select>
 	</div>
 
-	<div class="roundedOne">
+	<!-- <div class="roundedOne">
 		<input type="checkbox" value="Over" id="roundedOne" name="over" />
 		<label for="roundedOne"></label>
+	</div> -->
+
+	<div class="checkbox">
+		<input type = "checkbox" id="over" name="over" />
+		<label for="over">Over 21<span></span></label>
 	</div>
 
+	</div>
 	<div class="submit">
         <button style="margin-top: 10px" type="submit">Submit</button>
 	</div>
@@ -100,11 +108,10 @@
 		<?php
 			date_default_timezone_set("America/New_York");
 			$year = date('Y');
-			echo "&copy; $year All rights reserved.";
+			echo "Copyright &copy; $year Party Log";
 		?>
 	</div>
 </footer>
-
 </body>
 
 <script src="resources/js/jquery-1.7.1.js"></script>

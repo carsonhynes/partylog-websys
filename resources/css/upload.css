@@ -1,0 +1,36 @@
+h1, h2, div {
+	text-align: center;
+}
+
+h1 {
+	margin: 25px auto;
+}
+
+.guidelines {
+	width: 500px;
+	text-align: left;
+	margin: 0 auto 25px auto;
+}
+
+.instructions {
+	width: 500px;
+	text-align: left;
+	margin: 0 auto;
+}
+
+body {
+	width: 800px;
+	margin: 0 auto;
+
+	background-image: url("../media/Greek Letters Painted-01.jpg");
+	background-position: center;
+	background-size: cover;
+}
+
+.example-image {
+	text-align: center;
+}
+
+form {
+	margin-top: 100px;
+}
