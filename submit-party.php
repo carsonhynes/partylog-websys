@@ -30,7 +30,7 @@ else {
 
 //echo $q;
 
-$result = $mysqli->query("INSERT INTO party (name, fraternity, school, over, phone, username) VALUES $q");
+$result = $mysqli->query("INSERT INTO party (name, fraternity, school, phone, username, over) VALUES $q");
 
 header("Location: index.php");
 
