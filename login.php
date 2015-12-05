@@ -40,10 +40,10 @@
     echo "Error: " . $e->getMessage();
   }
   //Stop banned ips
-  $allowedResult = $dbconn->prepare('SELECT :ip FROM banned');
-  $allowedResult->execute(array(':ip' =>$_SERVER['REMOTE_ADDR']));
-  if(!$result->execute()){
-    $msg = 'You must wait to try again';
+  $notAllowed = $dbconn->prepare('SELECT ip FROM banned WHERE ip = :ip');
+  $notAllowed->execute(array(':ip' =>$_SERVER['REMOTE_ADDR']));
+  if($notAllowed->rowCount() > 0){
+    $msg = 'Your ip has been recorded and banned';
   }
 
   else if (isset($_POST['login']) && isset($_POST['password'])){
@@ -60,7 +60,7 @@
     $stmt->execute(array(':username' => $_POST['username'], ':password' => $hashed_salt));
     
     if($_SESSION['numAttempts'] > 5){
-       $msg = 'Banned for too many login attempts';
+       $msg = 'too many login attempts';
       
       $banned = $dbconn->prepare('INSERT INTO banned (ip) VALUES (:ip)');
       $banned->execute(array(':ip'=> $_SERVER['REMOTE_ADDR']));
