@@ -1,11 +1,16 @@
 <?php
   session_start();
 
+  if (!isset($_SESSION['numAttempts'])){
+
+    $_SESSION['numAttempts'] =0;
+    }
+
   try
   {
     $dbname = 'partylog';
     $user = 'root';
-    $pass = 'root';
+    $pass = '';
     $dbconn = new PDO('mysql:host=localhost;dbname='.$dbname, $user, $pass);
 
 
@@ -20,15 +25,29 @@
                 ');
 
     $result->execute();
+
+
+     $banned = $dbconn->prepare('CREATE TABLE IF NOT EXISTS `banned` (
+                  `ip` varchar(45 ) NOT NULL,
+                  PRIMARY KEY (`ip`));
+                ');
+
+
+    $banned->execute();
   }
   catch (Exception $e)
   {
     echo "Error: " . $e->getMessage();
   }
+  //Stop banned ips
+  $allowedResult = $dbconn->prepare('SELECT :ip FROM banned');
+  $allowedResult->execute(array(':ip' =>$_SERVER['REMOTE_ADDR']));
+  if(!$result->execute()){
+    $msg = 'You must wait to try again';
+  }
 
+  else if (isset($_POST['login']) && isset($_POST['password'])){
 
-  if (isset($_POST['login']) && isset($_POST['password']))
-  {
     $select_salt = $dbconn->prepare('SELECT salt FROM users WHERE username = :username');
     $select_salt->execute(array(':username' => $_POST['username']));
     $res = $select_salt->fetch();
@@ -39,19 +58,33 @@
 
     $stmt = $dbconn->prepare('SELECT * FROM users WHERE username=:username AND password = :password');
     $stmt->execute(array(':username' => $_POST['username'], ':password' => $hashed_salt));
+    
+    if($_SESSION['numAttempts'] > 5){
+       $msg = 'Banned for too many login attempts';
+      
+      $banned = $dbconn->prepare('INSERT INTO banned (ip) VALUES (:ip)');
+      $banned->execute(array(':ip'=> $_SERVER['REMOTE_ADDR']));
 
-    if ($user = $stmt->fetch())
-    {
+    }
+
+    else if ($user = $stmt->fetch()){
+
       $_SESSION['username'] = $user['username'];
       $_SESSION['uid'] = $user['id'];
+
+      $_SESSION['numAttempts'] = 0;
+
       //add in session data for social organization
       $msg = 'Succesfully Logged in';
     }
     else
     {
       $msg = 'Wrong username or password';
+      $_SESSION['numAttempts']++;
     }
   }
+
+
   if(isset($_POST['logout']) && isset($_SESSION['username']))
   {
     $_SESSION['username'] = NULL;
