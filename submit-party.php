@@ -4,7 +4,7 @@ $configs = include('config.php');
 //mysqli('servername', 'username', 'password', 'database')
 $mysqli = new mysqli(configs['host'], configs['username'], configs['password'], configs['database']);
 
-$username = "Iota Tau";
+$username = isset($_SESSION['username']) ? $_SESSION['username'] : 'Empty';
 
 $q = "('";
 

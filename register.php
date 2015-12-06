@@ -10,7 +10,7 @@ $username = "Iota Tau";
 
 try {
 
-	$dbh = new PDO("mysql:$host=localhost", $user, $pass);
+	$dbh = new PDO("mysql:host=$host", $user, $pass);
 
 	$result = $dbh->prepare('CREATE DATABASE IF NOT EXISTS `partylog`
 	                            DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;');

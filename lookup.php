@@ -6,7 +6,7 @@ $user = "websys";
 $pass = "websys";
 $query = "";
 
-$username = "Iota Tau";
+$username = isset($_SESSION['username']) ? $_SESSION['username'] : 'Empty';
 
 
 try {
@@ -55,7 +55,7 @@ try {
 	if (isset($_POST['frat']) && $_POST['frat'] != '') {
 		$frat = $_POST['frat'];
 		echo "You requested data about <strong>$frat</strong><br>";
-		$result = $dbh->prepare("SELECT * FROM party WHERE INSTR(`fraternity`, '$frat') > 0 AND `username` = '$username'");
+		$result = $dbh->prepare("SELECT * FROM party WHERE `fraternity` = '$frat' AND `username` = '$username'");
 		$result->execute();
 
 		while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
@@ -66,18 +66,17 @@ try {
 	if (isset($_POST['person']) && $_POST['person'] != '') {
 		$person = $_POST['person'];
 		echo "You requested data for <strong>$person</strong><br><br>";
-		$result = $dbh->prepare("SELECT * FROM party WHERE INSTR(`name`, '$person') > 0 AND `username` = '$username'");
+		$result = $dbh->prepare("SELECT * FROM party WHERE `name` = '$person' AND `username` = '$username'");
 		$result->execute();
 
 		$personBool = true;
 
 		while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
 			if ($personBool == true) {
-				echo '<strong>Fraternity:</strong> ' . $row['fraternity'] . ' <strong>School:</strong> ' . $row['school'] . ' <strong>Age:</strong> ' . $row['over'] . ' 21' . '<br>';
+				echo '<strong>Fraternity:</strong> ' . $row['fraternity'] . ' <strong>School:</strong> ' . $row['school'] . ' <strong>Age:</strong> ' . $row['over'] . ' 21' . '<br><strong>Dates Attended:</strong><br>';
 				$personBool = false;
 			}
-			echo '<strong>Dates Attended:</strong><br>';
-			echo date("F jS, Y", strtotime($row['timestamp']).'<br>');
+			echo date("F jS, Y", strtotime($row['timestamp'])).'<br>';
 		}
 	}
 
@@ -180,7 +179,7 @@ try {
 
 	function validate(formObj) {
 		if (formObj.date.value == "" && formObj.type.value == "date") {
-			alert("You must enter a select a date");
+			alert("You must select a date");
 			formObj.date.focus();
 			return false;
 		}

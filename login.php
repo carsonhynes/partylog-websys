@@ -46,6 +46,7 @@
     {
       $_SESSION['username'] = $user['username'];
       $_SESSION['uid'] = $user['id'];
+      $_SESSION['frat'] = $user['frat'];
       //add in session data for social organization
       $msg = 'Succesfully Logged in';
       header('Location: index.php');
