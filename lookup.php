@@ -4,7 +4,7 @@ $user = "websys";
 $pass = "websys";
 $query = "";
 
-$username = "Iota Tau";
+$username = isset($_SESSION['username']) ? $_SESSION['username'] : 'Empty';
 
 
 try {
