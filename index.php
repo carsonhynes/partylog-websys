@@ -17,7 +17,7 @@
 </div>
 
 	<menu>
-		<?php session_start(); echo $_SESSION['username'];?>
+		<?php session_start(); if(isset($_SESSION['username'])) echo "<p> Welcome " . $_SESSION['username'] ."</p>";?>
 		<ul>
 			<li id="title"><strong>Party Log</strong></li>
 			<li>Login</li>
