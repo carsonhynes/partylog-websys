@@ -11,4 +11,6 @@ else {
 	echo '	<script>
 				alert("File not uploaded");
 			</script>';
+
+	header( "refresh:0; url=upload.php" );
 }

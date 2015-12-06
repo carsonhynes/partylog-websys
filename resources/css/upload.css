@@ -1,30 +1,27 @@
-h1, h2, div {
+body {
+	position: relative;
+}
+
+h1, h2 {
 	text-align: center;
+	width: 460px;
 }
 
 h1 {
-	margin: 25px auto;
+	margin: 50px auto 0;
+	color: white;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+	font-family: 'Oxygen', sans-serif;
 }
 
-.guidelines {
-	width: 500px;
-	text-align: left;
-	margin: 0 auto 25px auto;
+h2 {
+	margin: 10px auto 10px;
+	font-family: 'Source Sans Pro', sans-serif;
 }
 
-.instructions {
-	width: 500px;
-	text-align: left;
-	margin: 0 auto;
-}
 
-body {
-	width: 800px;
-	margin: 0 auto;
-
-	background-image: url("../media/Greek Letters Painted-01.jpg");
-	background-position: center;
-	background-size: cover;
+li {
+	font-family: 'Source Sans Pro', sans-serif;
 }
 
 .example-image {
@@ -33,4 +30,67 @@ body {
 
 form {
 	margin-top: 100px;
+}
+img {
+	display: block;
+	width: 700px;
+
+	margin: 0 auto;
+
+}
+
+hr {
+	width: 722px;
+}
+#guidelines {
+	margin: 0 auto;
+}
+
+#instructions {
+	margin: 0 auto 100px;
+}
+
+
+#guidelines, #instructions {
+	position: relative;
+	background: rgba(228,228,228,0.92);
+	border-style: solid;
+	border-radius: 25px;
+	border-width: 3px;
+	padding: 5px;
+	width: 722px;
+	text-align: left;
+}
+
+#form {
+	position: relative;
+	width: 722px;
+	margin: 0 auto;
+}
+
+#submit, #list {
+	visibility: hidden;
+}
+
+#submitButton {
+	background:url("../media/submit.png");
+ 	right: 80px;
+}
+
+#listButton {
+	background:url("../media/chooseFile.png");
+	left: 80px;
+}
+
+#submitButton, #listButton {
+	position: absolute;
+  	bottom: 0px;
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+	height: 100px;
+	width: 100px;
+	border-style: solid;
+	border-radius: 25px;
+	border-width: 3px;
+	border-color: #E4E4E4;
 }

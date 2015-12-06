@@ -1,0 +1,43 @@
+body {
+    position: relative;
+    
+    background-image: url("../media/Greek Letters Painted-01.jpg");
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+    z-index: -1;
+}
+
+menu {
+	position: fixed;
+	top: 0;
+    left: 0;
+    width: 300px;
+    margin: 0 0 0 0;
+
+    z-index: 10;
+
+    background-color: #E4E4E4;
+
+    border: 1px solid #000;
+    border-bottom-right-radius: 25px;
+}
+
+menu ul {
+    margin: 3px 0;
+    padding-left: 0;
+}
+
+menu ul li{
+    display: inline-block;
+    padding: 0 3;
+    font-family: 'Oxygen', sans-serif;
+}
+
+menu a:link { 
+    color: #000;
+}
+
+menu a:visited { 
+    color: #383838;
+}
