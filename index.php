@@ -39,7 +39,7 @@
 	<div id="wrapper">
     <div class="ui-widget">
         <label for="name">Name:</label>
-        <input name="name" id="name" class="skipEnter" required pattern="([A-z])\w+"/>
+        <input name="name" id="name" class="skipEnter" required pattern="^[^\s]+(\s+[^\s]+)*$"/>
     </div>
 
 	<div class="ui-widget">
