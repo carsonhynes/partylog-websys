@@ -3,10 +3,10 @@
   $configs = include('config.php');
   try
   {
-    $host = configs['host'];
-    $user =  configs['username'];
-    $pass = configs['password'];
-    $dbname = configs['database'];
+    $host = $configs['host'];
+    $user =  $configs['username'];
+    $pass = $configs['password'];
+    $dbname = $configs['database'];
 
     $dbconn = new PDO("mysql:$host=localhost;dbname=$dbname", $user, $pass);
 
@@ -48,6 +48,8 @@
       $_SESSION['uid'] = $user['id'];
       //add in session data for social organization
       $msg = 'Succesfully Logged in';
+      header('Location: index.php');
+      exit();
     }
     else
     {

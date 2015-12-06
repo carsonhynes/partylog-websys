@@ -56,6 +56,7 @@ try {
 					$stmt = $dbh->prepare("INSERT INTO users(username, salt, password, frat, school) VALUES (:username, :salt, :password, :frat, :school);");
 					$stmt->execute(array(':username' => $_POST['username'], ':password' => $s_pass, ':salt' => $salt, ':school' => $_POST['school'], ':frat' => $_POST['frat']));
 					header('Location: login.php');
+					exit();
 				}
 			}
 		}

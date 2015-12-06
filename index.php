@@ -17,6 +17,7 @@
 </div>
 
 	<menu>
+		<?php session_start(); echo $_SESSION['username'];?>
 		<ul>
 			<li id="title"><strong>Party Log</strong></li>
 			<li>Login</li>
