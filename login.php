@@ -1,16 +1,11 @@
 <?php
   session_start();
 
-  if (!isset($_SESSION['numAttempts'])){
-
-    $_SESSION['numAttempts'] =0;
-    }
-
   try
   {
     $dbname = 'partylog';
     $user = 'root';
-    $pass = '';
+    $pass = 'root';
     $dbconn = new PDO('mysql:host=localhost;dbname='.$dbname, $user, $pass);
 
 
@@ -25,29 +20,15 @@
                 ');
 
     $result->execute();
-
-
-     $banned = $dbconn->prepare('CREATE TABLE IF NOT EXISTS `banned` (
-                  `ip` varchar(45 ) NOT NULL,
-                  PRIMARY KEY (`ip`));
-                ');
-
-
-    $banned->execute();
   }
   catch (Exception $e)
   {
     echo "Error: " . $e->getMessage();
   }
-  //Stop banned ips
-  $notAllowed = $dbconn->prepare('SELECT ip FROM banned WHERE ip = :ip');
-  $notAllowed->execute(array(':ip' =>$_SERVER['REMOTE_ADDR']));
-  if($notAllowed->rowCount() > 0){
-    $msg = 'Your ip has been recorded and banned';
-  }
 
-  else if (isset($_POST['login']) && isset($_POST['password'])){
 
+  if (isset($_POST['login']) && isset($_POST['password']))
+  {
     $select_salt = $dbconn->prepare('SELECT salt FROM users WHERE username = :username');
     $select_salt->execute(array(':username' => $_POST['username']));
     $res = $select_salt->fetch();
@@ -58,33 +39,19 @@
 
     $stmt = $dbconn->prepare('SELECT * FROM users WHERE username=:username AND password = :password');
     $stmt->execute(array(':username' => $_POST['username'], ':password' => $hashed_salt));
-    
-    if($_SESSION['numAttempts'] > 5){
-       $msg = 'too many login attempts';
-      
-      $banned = $dbconn->prepare('INSERT INTO banned (ip) VALUES (:ip)');
-      $banned->execute(array(':ip'=> $_SERVER['REMOTE_ADDR']));
 
-    }
-
-    else if ($user = $stmt->fetch()){
-
+    if ($user = $stmt->fetch())
+    {
       $_SESSION['username'] = $user['username'];
       $_SESSION['uid'] = $user['id'];
-
-      $_SESSION['numAttempts'] = 0;
-
       //add in session data for social organization
       $msg = 'Succesfully Logged in';
     }
     else
     {
       $msg = 'Wrong username or password';
-      $_SESSION['numAttempts']++;
     }
   }
-
-
   if(isset($_POST['logout']) && isset($_SESSION['username']))
   {
     $_SESSION['username'] = NULL;
@@ -123,7 +90,12 @@
 
  <h1 class="center-text">Database Lookup</h1>
  <?php if (isset($_SESSION['username'])) echo "<p> Welcome " . htmlentities($_SESSION['username']) . "</p>";
- if (isset($msg)) echo "<p>$msg</p>" ?>
+ if (isset($msg)) echo "<p>$msg</p>"; $msg = NULL;
+ if (isset($_SESSION['username'])):?>
+    <form action="login.php" method="post">
+      <input type = "submit" name="logout" value="Logout"/>
+    </form>
+ <?php else: ?>
  <form action="login.php" method="post">
    <label for="username">Username: </label>
    <input name="username" >
@@ -135,9 +107,7 @@
 
    <input type="submit" name="login" value="Login" />
  </form>
- <form action="login.php" method="post">
-   <input type = "submit" name="logout" value="logout"/>
- </form>
+ <?php endif; ?>
 </body>
 
 <script src="resources/js/pikaday.js"></script>
