@@ -16,12 +16,14 @@
 	<img src="resources/media/logo.png">
 </div>
 
-<menu>
-	<div id="title"><strong>Party Log</strong></div>
-	<div>Login</div>
-	<div><a href="mailto:carsonhynes@gmail.com?Subject=Party%20Log" target="_top">Contact</a></div>
-	<div>Help</div>
-</menu>
+	<menu>
+		<ul>
+			<li id="title"><strong>Party Log</strong></li>
+			<li>Login</li>
+			<li><a href="mailto:carsonhynes@gmail.com?Subject=Party%20Log" target="_top">Contact</a></li>
+			<li>Help</li>
+		</ul>
+	</menu>
 
 <form action="submit-party.php" method="post" onsubmit="return validate(this);">
 

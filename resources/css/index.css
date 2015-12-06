@@ -101,35 +101,6 @@ body {
 	z-index: -1;
 }
 
-menu {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 300px;
-    margin: 0 0 0 0;
-    padding: 9 0 9 20;
-
-    background-color: #E4E4E4;
-
-    border: 1px solid #000;
-    border-bottom-right-radius: 25px;
-    text-align: center;
-}
-
-menu div {
-	display: inline-block;
-	margin: 0 5 0 5;
-	font-family: 'Oxygen', sans-serif;
-}
-
-a:link { 
-    color: #000;
-}
-
-a:visited { 
-    color: #383838;
-}
-
 form {
 	position: relative;
 	background: rgba(228,228,228,0.92);
@@ -238,67 +209,3 @@ input[type="checkbox"]:checked + label span {
 label {
 	width: 100px;
 }
-
-
-/*.control-inline label {
-  display: inline;
-}
-
-// Had .csstransforms here, but caused weird compass errors
-:not(#foo) .styled-checkbox {
-  position: absolute; // take it out of document flow
-  opacity: 0; // hide it
-
-  & + label {
-    position: relative;
-    cursor: pointer;
-    padding: 0;
-  }
-
-  & + label:before {
-    content: '';
-    margin-right: 10px;
-    display: inline-block;
-    vertical-align: text-top;
-    @include square(20px);
-    background: $white;
-  }
-
-  &:focus + label:before,
-  &:hover + label:before {
-    background: $highlightColorActive;
-    box-shadow: 0 0 0 6px rgba(0,0,0,0.12);
-  }
-
-  &:checked + label:before {
-    background: $highlightColorActive;
-  }
-  
-  // Disabled state
-  &.disabled + label,
-  &[disabled] + label {
-    color: #b8b8b8;
-  }
-  &.disabled + label:before,
-  &[disabled] + label:before {
-    box-shadow: none;
-    background: #ddd;
-  }
-
-  // Checkmark. Could be replaced with an image
-  &:checked + label:after {
-    content: '';
-    position: absolute;
-    left: 6px;
-    top: 9px;
-    background: $white;
-    @include square(2px);
-    box-shadow: 
-      2px 0 0 $white,
-      4px 0 0 $white,
-      4px -2px 0 $white,
-      4px -4px 0 $white,
-      4px -6px 0 $white;
-    @include rotate(45deg);
-  }
-}*/

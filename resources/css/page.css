@@ -14,7 +14,6 @@ menu {
     left: 0;
     width: 300px;
     margin: 0 0 0 0;
-    padding: 9 0 9 20;
 
     z-index: 10;
 
@@ -22,13 +21,23 @@ menu {
 
     border: 1px solid #000;
     border-bottom-right-radius: 25px;
-
-	text-align: center;
 }
 
+menu ul {
+    margin: 3px 0;
+    padding-left: 0;
+}
 
-menu div {
+menu ul li{
     display: inline-block;
-    margin: 0 5 0 5;
+    padding: 0 3;
     font-family: 'Oxygen', sans-serif;
+}
+
+menu a:link { 
+    color: #000;
+}
+
+menu a:visited { 
+    color: #383838;
 }

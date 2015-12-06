@@ -8,7 +8,7 @@ h1, h2 {
 }
 
 h1 {
-	margin: 25px auto 0;
+	margin: 50px auto 0;
 	color: white;
 	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 	font-family: 'Oxygen', sans-serif;
@@ -19,14 +19,10 @@ h2 {
 	font-family: 'Source Sans Pro', sans-serif;
 }
 
-#content {
-	margin: 50px auto 0;
-}
 
 li {
 	font-family: 'Source Sans Pro', sans-serif;
-	/*margin-left: 100px;
-*/}
+}
 
 .example-image {
 	text-align: center;
@@ -43,6 +39,9 @@ img {
 
 }
 
+hr {
+	width: 722px;
+}
 #guidelines {
 	margin: 0 auto;
 }
@@ -63,7 +62,7 @@ img {
 	text-align: left;
 }
 
-form {
+#form {
 	position: relative;
 	width: 722px;
 	margin: 0 auto;
@@ -75,7 +74,6 @@ form {
 
 #submitButton {
 	background:url("../media/submit.png");
-	position: absolute;
  	right: 80px;
 }
 
