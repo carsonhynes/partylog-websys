@@ -1,5 +1,7 @@
 <?php
 
+$configs = include('config.php');
+
 $user = "websys";
 $pass = "websys";
 $query = "";

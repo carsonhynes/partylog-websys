@@ -1,22 +1,23 @@
 <?php
-
-$user = "root";
-$pass = "root";
-$query = "";
+$configs = include('config.php');
+$host = configs['host'];
+$user =  configs['username'];
+$pass = configs['password'];
+$dbname = configs['database'];
 
 $username = "Iota Tau";
 
 
 try {
 
-	$dbh = new PDO('mysql:host=localhost', $user, $pass);
+	$dbh = new PDO("mysql:$host=localhost", $user, $pass);
 
 	$result = $dbh->prepare('CREATE DATABASE IF NOT EXISTS `partylog`
 	                            DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;');
 
 	$result->execute();
 
-	$dbh = new PDO('mysql:host=localhost;dbname=partylog', $user, $pass);
+	$dbh = new PDO("mysql:host=$host;dbname=$dbname", $user, $pass);
 
 	$result = $dbh->prepare('CREATE TABLE IF NOT EXISTS `users` (
 								`id` int(11) NOT NULL AUTO_INCREMENT,

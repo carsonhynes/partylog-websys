@@ -1,12 +1,14 @@
 <?php
   session_start();
-
+  $configs = include('config.php');
   try
   {
-    $dbname = 'partylog';
-    $user = 'root';
-    $pass = 'root';
-    $dbconn = new PDO('mysql:host=localhost;dbname='.$dbname, $user, $pass);
+    $host = configs['host'];
+    $user =  configs['username'];
+    $pass = configs['password'];
+    $dbname = configs['database'];
+
+    $dbconn = new PDO("mysql:$host=localhost;dbname=$dbname", $user, $pass);
 
 
     $result = $dbconn->prepare('CREATE TABLE IF NOT EXISTS `users` (
