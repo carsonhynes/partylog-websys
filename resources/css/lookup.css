@@ -1,0 +1,58 @@
+h1 {
+	text-align: center;
+	width: 460px;
+	margin: 50px auto 0;
+	color: white;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+	font-family: 'Oxygen', sans-serif;
+}
+
+form {
+	margin: 10px auto;
+	position: relative;
+	background: rgba(228,228,228,0.92);
+	border-style: solid;
+	border-radius: 25px;
+	border-width: 3px;
+	padding: 5px;
+	width: 722px;
+	height: 100px;
+	text-align: left;
+}
+
+form label, form input, form select {
+	margin: 5px 0;
+}
+
+form label {
+	font-family: 'Source Sans Pro', sans-serif;
+	display: inline-block;
+	float: left;
+	clear: left;
+	width: 250px;
+	text-align: right;
+}
+
+form input, form select{
+  display: inline-block;
+  float: left;
+}
+
+button[type="submit"] {
+	visibility: hidden;
+}
+
+#submitButton {
+	background:url("../media/submit.png");
+	top: 6px;
+ 	right: 80px;
+ 	position: absolute;
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+	height: 100px;
+	width: 100px;
+	border-style: solid;
+	border-radius: 25px;
+	border-width: 3px;
+	border-color: #E4E4E4;
+}
