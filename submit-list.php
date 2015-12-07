@@ -1,9 +1,9 @@
 <?php
 
-$filePath = "/var/www/html/partylog/names.csv";
+$filePath = "/var/www/html/partylog/resources/misc/names.csv";
 
 if (move_uploaded_file($_FILES["list"]["tmp_name"], $filePath)) {
-	exec("python Gcsv2list.py");
+	exec("python ./resources/misc/Gcsv2list.py");
 	header("Location: index.php");
 }
 
