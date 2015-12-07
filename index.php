@@ -84,7 +84,7 @@
 
 <script src="resources/js/jquery-1.7.1.js"></script>
 <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-<!-- <script src="list.js"></script>
- --><script type="text/javascript" src="resources/js/index.js"></script>
- <script type="text/javascript" src="resources/js/carhartl-jquery-cookie-92b7715/jquery.cookie.js" ></script>
+<script src="list.js"></script>
+<script type="text/javascript" src="resources/js/index.js"></script>
+<script type="text/javascript" src="resources/js/carhartl-jquery-cookie-92b7715/jquery.cookie.js" ></script>
 </html>

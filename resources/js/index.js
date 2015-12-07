@@ -1,8 +1,8 @@
- // $(function() {
- //        $( "#name" ).autocomplete({
- //            source: names
- //        });
- //    });
+$(function() {
+     $( "#name" ).autocomplete({
+         source: names
+     });
+});
 
 $(document).ready(function(){
 
