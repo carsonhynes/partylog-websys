@@ -1,5 +1,5 @@
 form {
-  height: 525px;
+  height: 575px;
 }
 
 form h1{
@@ -7,9 +7,13 @@ form h1{
   margin: 20px;
 }
 
+.ui-widget label {
+  font-size: 25px;
+}
+
 .checkbox label{
-  position: relative;
-  top: 20px;
+  position: absolute;
+  bottom: 40px;
 }
 
 .submit #register{

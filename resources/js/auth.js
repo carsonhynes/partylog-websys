@@ -1,32 +1,32 @@
 $(document).ready(function(){
-
   $.ajax({
-  type: "GET",
-  url: "information.js",
-  dataType: "json",
-  success: function(responseData, status){
-  var outputSchool = "";
-  var outputFraternity = "";
-     $.each(responseData.schools, function(i, item) {
-      outputSchool += "<option value=";
-      outputSchool += item.value;
-      outputSchool += ">";
-      outputSchool += item.school;
-      outputSchool += "</option>";
+    type: "GET",
+    url: "information.js",
+    dataType: "json",
+    success: function(responseData, status){;
+    var outputSchool = "";
+    var outputFraternity = "";
+       $.each(responseData.schools, function(i, item) {
+        outputSchool += "<option value='";
+        outputSchool += item.name;
+        outputSchool += "'>";
+        outputSchool += item.school;
+        outputSchool += "</option>";
+      }); 
+      $.each(responseData.fraternities, function(i, item) {
+        outputFraternity += "<option value='";
+        outputFraternity += item.name;
+        outputFraternity += "'>";
+        outputFraternity += item.fraternity;
+        outputFraternity += "</option>";
+      });         
+      $("#school").html(outputSchool);
+      $("#fraternity").html(outputFraternity);
+    },
+    error: function(xhr, ajaxOptions, thrownError) {
+        alert("There was a problem: "+xhr.status+" "+thrownError);
+        }
     });
-    $.each(responseData.fraternities, function(i, item) {
-      outputFraternity += "<option value=\"";
-      outputFraternity += item.value;
-      outputFraternity += "\">";
-      outputFraternity += item.fraternity;
-      outputFraternity += "</option>";
-    });
-    $("#school").html(outputSchool);
-    $("#fraternity").html(outputFraternity);
-  },
-  error: function(xhr, ajaxOptions, thrownError) {
-      alert("There was a problem: "+xhr.status+" "+thrownError);
-      }
   });
 
   $(".skipEnter").keypress(function(event) {
