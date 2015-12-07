@@ -1,4 +1,8 @@
-
+$(function() {
+     $( "#name" ).autocomplete({
+         source: names
+     });
+});
 
 $(document).ready(function(){
 
