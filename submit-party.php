@@ -1,7 +1,7 @@
 <?php
 
 //mysqli('servername', 'username', 'password', 'database')
-$mysqli = new mysqli("localhost", "websys", "websys", "partylog");
+$mysqli = new mysqli("localhost", "root", "", "partylog");
 
 $username = "Iota Tau";
 
@@ -14,6 +14,18 @@ function test_input($data) {
 	return $data;
 }
 
+//ensure party and frat exists
+$frat = "'";
+$sc = "'";
+$frat .= test_input($_POST["fraternity"]);
+$sc .= test_input($_POST["school"]);
+$frat .= "'";
+$sc .= "'";
+
+$result = $mysqli->prepare("SELECT * FROM fraternity, school WHERE fraternity.name = $frat AND school.name = $sc");
+$result->execute();
+if($result->num_rows > 0 ){
+$q = "('";
 $q .= test_input($_POST["name"]) . "', '";
 $q .= test_input($_POST["fraternity"]) . "', '";
 $q .= test_input($_POST["school"]) . "', '";
@@ -100,5 +112,5 @@ header("Location: index.php");
 
 		}
 
-
+}
 ?>
