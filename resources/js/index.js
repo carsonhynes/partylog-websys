@@ -1,8 +1,4 @@
-$(function() {
-     $( "#name" ).autocomplete({
-         source: names
-     });
-});
+
 
 $(document).ready(function(){
 
@@ -19,14 +15,14 @@ $(document).ready(function(){
         outputSchool += ">";
         outputSchool += item.school;
         outputSchool += "</option>";
-      }); 
+      });
       $.each(responseData.fraternities, function(i, item) {
         outputFraternity += "<option value=";
         outputFraternity += item.value;
         outputFraternity += ">";
         outputFraternity += item.fraternity;
         outputFraternity += "</option>";
-      });         
+      });
       $("#school").html(outputSchool);
       $("#fraternity").html(outputFraternity);
     },
@@ -109,12 +105,12 @@ function validate(formObj) {
 
 $('#over').click(function () {
     $('#form-wrapper').children().hide();
-    $('.pin-prompt').show();
+    $('#pin-prompt').show();
 });
 
-function pinValidate(formObj) {
-    if (formObj.pin.value == '0000') {
-        $('#form-wrapper').children().show();
-        $('.pin-prompt').hide();
+function pinValidate() {
+    if ($("#pin").val() === '0000') {
+      $('#form-wrapper').children().show();
+      $('.pin-prompt').hide();
     }
 }

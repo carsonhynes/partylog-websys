@@ -25,17 +25,20 @@
 	</ul>
 </menu>
 <div id="form-wrapper">
-	<form action="submit-party.php" method="post" onsubmit="return validate(this);">
 
 		<div id="pin-prompt">
-			<form onsubmit="return pinValidate(this);">
+
 				<div class="ui-widget">
 					<label for="pin">PIN:</label>
-					<input name="pin" placeholder="ex. 8080" required pattern="[0-9]{4}"/>
-					<button type="submit">Submit</button>
+					<input id="pin" name="pin" placeholder="ex. 8080" required pattern="[0-9]{4}"/>
+					<button onclick="pinValidate()">Submit</button>
 				</div>
-			</form>
+
 		</div>
+
+
+	<form id="submit-form"action="submit-party.php" method="post" onsubmit="return validate(this);">
+
 
 		<div class='date'>
 		<strong>
@@ -75,7 +78,7 @@
 			</div>
 		</div>
 		<div class="submit">
-	        <button style="margin-top: 10px" type="submit"><span>Submit</span></button>
+	        <button id="submit" style="margin-top: 10px" type="submit"><span>Submit</span></button>
 		</div>
 	</form>
 </div>

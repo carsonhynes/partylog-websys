@@ -1,12 +1,8 @@
 <?php
 
-//$configs = include('config.php');
-$host = 'localhost';
-$username = 'websys';
-$password = 'websys';
-$database = 'partylog';
-$mysqli = new mysqli($host, $username, $password, $database);
-//$mysqli = new mysqli(configs['host'], configs['username'], configs['password'], configs['database']);
+$configs = include('config.php');
+//mysqli('servername', 'username', 'password', 'database')
+$mysqli = new mysqli($configs['host'], $configs['username'], $configs['password'], $configs['database']);
 
 $username = isset($_SESSION['username']) ? $_SESSION['username'] : 'Empty';
 
@@ -97,10 +93,13 @@ header("Location: index.php");
 
 			try{
 				$mail->Send();
-				//echo "Success!";
+				echo "Success!";
 			} catch(Exception $e){
 				//Something went bad
-				//echo "Fail :(";
+				echo "Fail :(";
 			}
 
 		}
+
+
+?>
