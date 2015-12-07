@@ -106,3 +106,15 @@ function validate(formObj) {
 
     return true;
 }
+
+$('#over').click(function () {
+    $('#form-wrapper').children().hide();
+    $('.pin-prompt').show();
+});
+
+function pinValidate(formObj) {
+    if (formObj.pin.value == '0000') {
+        $('#form-wrapper').children().show();
+        $('.pin-prompt').hide();
+    }
+}
