@@ -2,7 +2,7 @@
 
 return array(
     'host' => 'localhost',
-    'username' => 'root',
-    'password' => 'root',
+    'username' => 'websys',
+    'password' => 'websys',
     'database' => 'partylog'
 );
