@@ -67,20 +67,9 @@
 
 	</div>
 	<div class="submit">
-        <button style="margin-top: 10px" type="submit"><span>Submit</span></button>
+        <button type="submit"><span>Submit</span></button>
 	</div>
 </form>
-
-<!-- <footer>
-	<div>
-		<?php
-			date_default_timezone_set("America/New_York");
-			$year = date('Y');
-			echo "Copyright &copy; $year Party Log";
-		?>
-	</div>
-</footer> -->
-
 </body>
 
 <script src="resources/js/jquery-1.7.1.js"></script>
