@@ -76,33 +76,25 @@
  <head>
    <title>Party Log - Login</title>
    <link rel="stylesheet" type="text/css" href="resources/css/pikaday.css">
+   <link rel="stylesheet" type="text/css" href="resources/css/login.css">
    <script src="resources/js/modernizr-custom.js"></script>
 
-   <style>
-     #dateLabel {
-       margin-right: 33px;
-     }
-     #personLabel {
-       margin-right: 20px;
-     }
-     #fratInput, #personInput, #dateInput {
-       width: 200px;
-     }
-     #dateInput {
-       margin-right: 4px;
-     }
-     .center-text {
-       text-align: center;
-       width: 300px;
-     }
-   </style>
+
  </head>
 
  <body>
-
+   <menu>
+     <ul>
+       <li id="title"><strong>Party Log</strong></li>
+       <li>Login</li>
+       <li><a href="mailto:carsonhynes@gmail.com?Subject=Party%20Log" target="_top">Contact</a></li>
+       <li>Help</li>
+     </ul>
+   </menu>
+   <section id="form_container">
  <h1 class="center-text">Database Lookup</h1>
  <?php if (isset($_SESSION['username'])) echo "<p> Welcome " . htmlentities($_SESSION['username']) . "</p>";
- if (isset($msg)) echo "<p>$msg</p>"; $msg = NULL;
+ if (isset($msg)) echo "<p id=\"info-msg\">$msg</p>"; $msg = NULL;
  if (isset($_SESSION['username'])):?>
     <form action="login.php" method="post">
       <input type = "submit" name="logout" value="Logout"/>
@@ -120,6 +112,7 @@
    <input type="submit" name="login" value="Login" />
  </form>
  <?php endif; ?>
+ </section>
 </body>
 
 <script src="resources/js/pikaday.js"></script>
