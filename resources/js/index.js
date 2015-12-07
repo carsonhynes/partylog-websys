@@ -6,7 +6,35 @@
 
 $(document).ready(function(){
 
-    var COOKIE_NAME = 'splash-page-cookie-test2';
+    $.ajax({
+    type: "GET",
+    url: "information.js",
+    dataType: "json",
+    success: function(responseData, status){
+    var outputSchool = "";
+    var outputFraternity = "";
+       $.each(responseData.schools, function(i, item) {
+        outputSchool += "<option value=";
+        outputSchool += item.value;
+        outputSchool += ">";
+        outputSchool += item.school;
+        outputSchool += "</option>";
+      }); 
+      $.each(responseData.fraternities, function(i, item) {
+        outputFraternity += "<option value=";
+        outputFraternity += item.value;
+        outputFraternity += ">";
+        outputFraternity += item.fraternity;
+        outputFraternity += "</option>";
+      });         
+      $("#school").html(outputSchool);
+      $("#fraternity").html(outputFraternity);
+    },
+    error: function(xhr, ajaxOptions, thrownError) {
+        alert("There was a problem: "+xhr.status+" "+thrownError);
+        }
+    });
+    var COOKIE_NAME = 'splash-page-cookie';
     $go = $.cookie(COOKIE_NAME);
     if ($go == null) {
         console.log("null");
@@ -51,14 +79,13 @@ $(document).ready(function(){
         }
     });
 
-    $("#fraternity").hide();
     $("#school").change(function () {
         var select = $('#school option:selected').text();
         if (select == "RPI") {
-            $("#fraternity").show();
+            $("#fraternityWidget").show();
         }
         else {
-            $("#fraternity").hide();
+            $("#fraternityWidget").hide();
         }
     });
 
