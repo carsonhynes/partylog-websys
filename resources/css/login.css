@@ -1,0 +1,85 @@
+#login-form {
+	position: relative;
+	background: rgba(228,228,228,0.92);
+	border-style: solid;
+	border-radius: 25px;
+	border-width: 3px;
+	padding: 5px;
+	height: 225px;
+	width: 600px;
+	margin: 230px auto 0;
+  text-align: center;
+}
+
+#logout-form {
+	position: relative;
+	background: rgba(228,228,228,0.92);
+	border-style: solid;
+	border-radius: 25px;
+	border-width: 3px;
+	padding: 5px;
+	height: 200px;
+	width: 600px;
+	margin: 230px auto 0;
+  text-align: center;
+}
+
+#submit{
+  background-image: url("../media/submit.png");
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  height: 50px;
+  width: 100px;
+  border: none;
+  border-style: solid;
+  border-radius: 25px;
+  border-width: 3px;
+  border-color: #E4E4E4;
+  margin: 5px;
+  float: none;
+}
+
+form label{
+	font-family: 'Source Sans Pro', sans-serif;
+	font-size: 1em;
+	display: inline-block;
+  float: left;
+  clear: left;
+  width: 200px;
+  text-align: right;
+  margin-bottom: 5px;
+}
+
+form input{
+  display: inline-block;
+  float: left;
+}
+
+.err-msg {
+  text-align: center;
+  margin: 5;
+  font-size: 16px;
+  color: red;
+}
+
+button a{
+  text-decoration: none;
+  color: white;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size:14px;
+}
+
+button {
+  text-decoration: none;
+  background-color: #383838;
+  height: 50px;
+  width: 100px;
+  border-radius: 30px;
+  -moz-border-radius: 30px;
+  -webkit-border-radius: 30px;
+  margin-left: 300px;
+}
+
+form section{
+  display: inline-block;
+}

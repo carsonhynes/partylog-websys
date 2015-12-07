@@ -1,6 +1,6 @@
 body {
     position: relative;
-    
+
     background-image: url("../media/Greek Letters Painted-01.jpg");
     background-position: center;
     background-size: cover;
@@ -12,7 +12,7 @@ menu {
 	position: fixed;
 	top: 0;
     left: 0;
-    width: 300px;
+    width: 320px;
     margin: 0 0 0 0;
 
     z-index: 10;
@@ -34,10 +34,10 @@ menu ul li{
     font-family: 'Oxygen', sans-serif;
 }
 
-menu a:link { 
+menu a:link {
     color: #000;
 }
 
-menu a:visited { 
+menu a:visited {
     color: #383838;
 }

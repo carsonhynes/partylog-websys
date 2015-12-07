@@ -1,5 +1,7 @@
 <?php
-  session_start();
+  if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+  }
   $configs = include('config.php');
   try
   {
@@ -19,13 +21,14 @@
 
 
     $result = $dbconn->prepare('CREATE TABLE IF NOT EXISTS `users` (
-                  `id` int(11) NOT NULL AUTO_INCREMENT,
-                  `username` varchar(50) NOT NULL,
-                  `salt` varchar(100) NOT NULL,
-                  `password` varchar(100) NOT NULL,
-                  `frat` varchar(50) NOT NULL,
-                  `school` varchar(50) NOT NULL,
-                  PRIMARY KEY (`id`));
+  								`id` int(11) NOT NULL AUTO_INCREMENT,
+  								`username` varchar(50) NOT NULL,
+  								`salt` varchar(100) NOT NULL,
+  								`password` varchar(100) NOT NULL,
+  								`frat` varchar(50) NOT NULL,
+  								`school` varchar(50) NOT NULL,
+  								`phone` int(11) DEFAULT NULL,
+  								PRIMARY KEY (`id`));
                 ');
 
     $result->execute();
@@ -76,83 +79,64 @@
  <head>
    <title>Party Log - Login</title>
    <link rel="stylesheet" type="text/css" href="resources/css/pikaday.css">
+
+   <link rel="stylesheet" type="text/css" href="resources/css/login.css">
+   <link rel="stylesheet" type="text/css" href="resources/css/page.css">
+   <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
    <script src="resources/js/modernizr-custom.js"></script>
 
-   <style>
-     #dateLabel {
-       margin-right: 33px;
-     }
-     #personLabel {
-       margin-right: 20px;
-     }
-     #fratInput, #personInput, #dateInput {
-       width: 200px;
-     }
-     #dateInput {
-       margin-right: 4px;
-     }
-     .center-text {
-       text-align: center;
-       width: 300px;
-     }
-   </style>
+
  </head>
 
  <body>
+   <menu>
+     <?php if(isset($_SESSION['username'])) echo "<p class=\"username\"> Welcome " . htmlentities($_SESSION['username']) ."</p>";?>
+     <ul>
+       <li id="title"><strong>Party Log</strong></li>
+       <li><a href="login.php"><?php echo (isset($_SESSION['username'])) ? "Logout" : "Login";?></a></li>
+       <li><a href="mailto:carsonhynes@gmail.com?Subject=Party%20Log" target="_top">Contact</a></li>
+       <li>Help</li>
+     </ul>
+   </menu>
 
- <h1 class="center-text">Database Lookup</h1>
- <?php if (isset($_SESSION['username'])) echo "<p> Welcome " . htmlentities($_SESSION['username']) . "</p>";
- if (isset($msg)) echo "<p>$msg</p>"; $msg = NULL;
- if (isset($_SESSION['username'])):?>
-    <form action="login.php" method="post">
-      <input type = "submit" name="logout" value="Logout"/>
+
+
+
+ <?php if (isset($_SESSION['username'])):?>
+    <form action="login.php" method="post" id="logout-form">
+      <h1 class="title">Log Out</h1>
+      <?php if (isset($msg)) echo "<p class=\"err-msg\">$msg</p>"; $msg = NULL;?>
+      <input id="submit" type = "submit" name="logout" value=" "/>
     </form>
+
  <?php else: ?>
- <form action="login.php" method="post">
-   <label for="username">Username: </label>
-   <input name="username" >
-   <br>
+ <form action="login.php" method="post" id="login-form">
+   <h1 class="title">Log In</h1>
+   <?php if (isset($msg)) echo "<p class=\"err-msg\">$msg</p>"; $msg = NULL;?>
+   <div class="ui-widget">
+       <label for="name">Username:</label>
+       <input name="username" id="name" class="skipEnter login-field"/>
+   </div>
 
-   <label for="pasword" >Password: </label>
-   <input name="password" >
-   <br>
+   <div class="ui-widget">
+       <label for="password">Password:</label>
+       <input type="password" name="password" id="password" class="skipEnter login-field"/>
+   </div>
 
-   <input type="submit" name="login" value="Login" />
+   <section>
+     <input id="submit" type="submit" name="login" value=" " />
+     <button ><a id="register" class="button" href="register.php">Sign up</a></button>
+   </section>
  </form>
+
  <?php endif; ?>
+
 </body>
 
+
+<script src="resources/js/jquery-1.7.1.js"></script>
+<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script src="resources/js/pikaday.js"></script>
-<script>
-
-  function validate(formObj) {
-    if (formObj.date.value == "" && formObj.type.value == "date") {
-      alert("You must enter a select a date");
-      formObj.date.focus();
-      return false;
-    }
-
-    if (formObj.frat.value == "" && formObj.type.value == "frat") {
-      alert("You must enter a enter a fraternity name");
-      formObj.frat.focus();
-      return false;
-    }
-
-    if (formObj.person.value == "" && formObj.type.value == "person") {
-      alert("You must enter a enter a person's name");
-      formObj.person.focus();
-      return false;
-    }
-
-    if (formObj.person.value == "" && formObj.date.value == "" && formObj.frat.value == "") {
-      alert("You must select a form of lookup");
-      return false;
-    }
-
-    return true;
-  }
-
-
-</script>
+<script type="text/javascript" src="resources/js/auth.js"></script>
 
 </html>
