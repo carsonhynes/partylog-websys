@@ -27,6 +27,7 @@ try {
 								`frat` varchar(50) NOT NULL,
 								`school` varchar(50) NOT NULL,
 								`phone` int(11) DEFAULT NULL,
+								`over` varchar(10) DEFAULT \'under\',
 								PRIMARY KEY (`id`));
 							');
 
@@ -54,13 +55,14 @@ try {
 					$salt = hash('sha256', uniqid(mt_rand(),true));
 					$raw_pass = $_POST['password'];
 					$s_pass = hash('sha256', $salt . $raw_pass);
-					$stmt = $dbh->prepare("INSERT INTO users(username, salt, password, frat, school, phone) VALUES (:username, :salt, :password, :frat, :school, :phone);");
+					$stmt = $dbh->prepare("INSERT INTO users(username, salt, password, frat, school, phone, over) VALUES (:username, :salt, :password, :frat, :school, :phone, :over);");
 					$stmt->execute(array(':username' => $_POST['username'], ':password' => $s_pass,
 																':salt' => $salt, ':school' => $_POST['school'],
-																':frat' => $_POST['fraternity'], ':phone' => $_POST['phoneNumber']));
-					echo $stmt->fetch();
-					//header('Location: login.php');
-					//exit();
+																':frat' => $_POST['fraternity'], ':phone' => intval($_POST['phoneNumber']),
+																':over' => (isset($_POST['over']) ? "over" : "under")));
+
+					header('Location: login.php');
+					exit();
 				}
 			}
 		}
@@ -96,17 +98,17 @@ catch (Exception $e) {
 			<?php session_start(); if(isset($_SESSION['username'])) echo "<p> Welcome " . $_SESSION['username'] ."</p>";?>
 			<ul>
 				<li id="title"><strong>Party Log</strong></li>
-				<li><a href="login.php">Login</a></li>
+				<li><a href="login.php"><?php echo (isset($_SESSION['username'])) ? "Logout" : "Login";?></a></li>
 				<li><a href="mailto:carsonhynes@gmail.com?Subject=Party%20Log" target="_top">Contact</a></li>
 				<li>Help</li>
 			</ul>
 		</menu>
 
-	<form action="register.php" method="post" >
+	<form action="register.php" method="post" onsubmit="return validate_register(this);">
 
 		<div id="wrapper">
 			<h1 class="center-text">Sign Up</h1>
-			<?php if (isset($msg)) echo "<p class=\"err-msg\">$msg</p>"; $msg= NULL; ?>
+			<?php if (isset($msg)) echo "<p class=\"err-msg\">Error: $msg</p>"; $msg= NULL; ?>
 	    <div class="ui-widget">
 	        <label for="name">Username:</label>
 	        <input name="username" id="name" class="skipEnter"/>
@@ -140,7 +142,7 @@ catch (Exception $e) {
 			</select>
 		</div>
 
-		<div id="fraternity" class="ui-widget">
+		<div id="fraternityWidget" class="ui-widget">
 			<label for="fraternity">Fraternity: </label>
 			<select name="fraternity" id="fraternity">
 				<option value=""></option>
@@ -191,39 +193,9 @@ catch (Exception $e) {
 
 	</form>
 	</body>
-
+	<script src="resources/js/jquery-1.7.1.js"></script>
+	<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 	<script src="resources/js/pikaday.js"></script>
-	<script>
-
-
-		function validate(formObj) {
-			if (formObj.date.value == "" && formObj.type.value == "date") {
-				alert("You must enter a select a date");
-				formObj.date.focus();
-				return false;
-			}
-
-			if (formObj.frat.value == "" && formObj.type.value == "frat") {
-				alert("You must enter a enter a fraternity name");
-				formObj.frat.focus();
-				return false;
-			}
-
-			if (formObj.person.value == "" && formObj.type.value == "person") {
-				alert("You must enter a enter a person's name");
-				formObj.person.focus();
-				return false;
-			}
-
-			if (formObj.person.value == "" && formObj.date.value == "" && formObj.frat.value == "") {
-				alert("You must select a form of lookup");
-				return false;
-			}
-
-			return true;
-		}
-
-
-	</script>
+	<script type="text/javascript" src="resources/js/register.js"></script>
 
 	</html>

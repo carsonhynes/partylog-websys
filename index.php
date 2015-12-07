@@ -16,15 +16,15 @@
 	<img src="resources/media/logo.png">
 </div>
 
-	<menu>
-		<?php session_start(); if(isset($_SESSION['username'])) echo "<p> Welcome " . $_SESSION['username'] ."</p>";?>
-		<ul>
-			<li id="title"><strong>Party Log</strong></li>
-			<li><a href="login.php">Login</a></li>
-			<li><a href="mailto:carsonhynes@gmail.com?Subject=Party%20Log" target="_top">Contact</a></li>
-			<li>Help</li>
-		</ul>
-	</menu>
+<menu>
+	<?php session_start(); if(isset($_SESSION['username'])) echo "<p> Welcome " . $_SESSION['username'] ."</p>";?>
+	<ul>
+		<li id="title"><strong>Party Log</strong></li>
+		<li><a href="login.php"><?php echo (isset($_SESSION['username'])) ? "Logout" : "Login";?></a></li>
+		<li><a href="mailto:carsonhynes@gmail.com?Subject=Party%20Log" target="_top">Contact</a></li>
+		<li>Help</li>
+	</ul>
+</menu>
 
 <form action="submit-party.php" method="post" onsubmit="return validate(this);">
 

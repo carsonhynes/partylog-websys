@@ -19,13 +19,14 @@
 
 
     $result = $dbconn->prepare('CREATE TABLE IF NOT EXISTS `users` (
-                  `id` int(11) NOT NULL AUTO_INCREMENT,
-                  `username` varchar(50) NOT NULL,
-                  `salt` varchar(100) NOT NULL,
-                  `password` varchar(100) NOT NULL,
-                  `frat` varchar(50) NOT NULL,
-                  `school` varchar(50) NOT NULL,
-                  PRIMARY KEY (`id`));
+  								`id` int(11) NOT NULL AUTO_INCREMENT,
+  								`username` varchar(50) NOT NULL,
+  								`salt` varchar(100) NOT NULL,
+  								`password` varchar(100) NOT NULL,
+  								`frat` varchar(50) NOT NULL,
+  								`school` varchar(50) NOT NULL,
+  								`phone` int(11) DEFAULT NULL,
+  								PRIMARY KEY (`id`));
                 ');
 
     $result->execute();
@@ -84,9 +85,10 @@
 
  <body>
    <menu>
+     <?php session_start(); if(isset($_SESSION['username'])) echo "<p> Welcome " . $_SESSION['username'] ."</p>";?>
      <ul>
        <li id="title"><strong>Party Log</strong></li>
-       <li>Login</li>
+       <li><a href="login.php"><?php echo (isset($_SESSION['username'])) ? "Logout" : "Login";?></a></li>
        <li><a href="mailto:carsonhynes@gmail.com?Subject=Party%20Log" target="_top">Contact</a></li>
        <li>Help</li>
      </ul>
@@ -95,6 +97,8 @@
  <h1 class="center-text">Database Lookup</h1>
  <?php if (isset($_SESSION['username'])) echo "<p> Welcome " . htmlentities($_SESSION['username']) . "</p>";
  if (isset($msg)) echo "<p id=\"info-msg\">$msg</p>"; $msg = NULL;
+
+
  if (isset($_SESSION['username'])):?>
     <form action="login.php" method="post">
       <input type = "submit" name="logout" value="Logout"/>
