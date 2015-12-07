@@ -90,32 +90,16 @@ try {
 <html>
 <head>
 	<title>Party Log - Lookup</title>
+	<link rel="shortcut icon" href="resources/media/PL.ico">
 	<link rel="stylesheet" type="text/css" href="resources/css/pikaday.css">
+    <link rel="stylesheet" href="resources/css/page.css">	
+	<link rel="stylesheet" href="resources/css/lookup.css">
 	<script src="resources/js/modernizr-custom.js"></script>
-
-	<style>
-		#dateLabel {
-			margin-right: 33px;
-		}
-		#personLabel {
-			margin-right: 20px;
-		}
-		#fratInput, #personInput, #dateInput {
-			width: 200px;
-		}
-		#dateInput {
-			margin-right: 4px;
-		}
-		.center-text {
-			text-align: center;
-			width: 300px;
-		}
-	</style>
 </head>
 
 <body>
 
-<h1 class="center-text">Database Lookup</h1>
+<h1>Database Lookup</h1>
 
 <form action="lookup.php" method="post" onsubmit="return validate(this)">
 
@@ -170,6 +154,8 @@ try {
 	<br>
 
 	<button type="submit">Submit</button>
+	<button id="submitButton" onclick="document.getElementById('submit').click()"/>
+
 </form>
 </body>
 

@@ -1,5 +1,6 @@
 <html>
 <head>
+	<title>Party Log - Upload</title>
 	<link rel="shortcut icon" href="resources/media/PL.ico">
     <link href='https://fonts.googleapis.com/css?family=Oxygen:400,700' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
