@@ -5,18 +5,18 @@
 	background-repeat: no-repeat;
 	background-position: center;
 
-    position:fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    text-align: center;
+  position:fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  text-align: center;
 
-    min-height: 360px;
+  min-height: 360px;
 
-    z-index: 2;
+  z-index: 2;
 
-    display: none;
+  display: none;
 }
 
 #splash h2 {

@@ -1,9 +1,10 @@
 <?php
 
+$configs = include('config.php');
 //mysqli('servername', 'username', 'password', 'database')
-$mysqli = new mysqli("localhost", "websys", "websys", "partylog");
+$mysqli = new mysqli(configs['host'], configs['username'], configs['password'], configs['database']);
 
-$username = "Iota Tau";
+$username = isset($_SESSION['username']) ? $_SESSION['username'] : 'Empty';
 
 $q = "('";
 
@@ -38,37 +39,37 @@ header("Location: index.php");
 
 	if (isset($_POST["phoneNumber"]))
 	{
-		
-		
+
+
 		require 'PHPMailer/PHPMailerAutoload.php';
-	
-	
+
+
 		$number = $_POST["phoneNumber"];
 		$soberD = "4444444444"; // should be loaded from database by a query
-			
-	
+
+
 		//using carriers email to sms clients because it's the only free alternative to sms gateways
 		$email = $number ."@vtext.com";
 		$name = "Party Guest";
 		sendMail($email, $name, $soberD);
-		
+
 		$email = $number ."@txt.att.net";
 		$name = "Party Guest";
 		sendMail($email, $name, $soberD);
-		
+
 		$email = $number ."@tmomail.net";
 		$name = "Party Guest";
 		sendMail($email, $name, $soberD);
-		
+
 		$email = $number ."@sprintpcs.com";
 		$name = "Party Guest";
 		sendMail($email, $name, $soberD);
-		
-		
+
+
 	}
-	
+
 	function sendMail($email, $name, $soberD){
-			
+
 			$mail = new PHPMailer(true);
 
 			//Set up gmail smtp
@@ -79,10 +80,10 @@ header("Location: index.php");
 			$mail->Port = 465; // set the SMTP port for the GMAIL server
 			$mail->Username = "websysgroup8@gmail.com"; // GMAIL username
 			$mail->Password = "richardplotkarpi"; // GMAIL password
-			
-		
+
+
 			//create message
-			$email_from = "websysgroup8@gmail.com"; 
+			$email_from = "websysgroup8@gmail.com";
 			$name_from = "PartyLog";
 			//Typical mail data
 			$mail->AddAddress($email, $name);

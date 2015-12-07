@@ -1,5 +1,6 @@
 <html>
 <head>
+	<title>Party Log - Upload</title>
 	<link rel="shortcut icon" href="resources/media/PL.ico">
     <link href='https://fonts.googleapis.com/css?family=Oxygen:400,700' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
@@ -10,9 +11,10 @@
 <body>
 
 	<menu>
+		<?php if(isset($_SESSION['username'])) echo "<p class=\"username\"> Welcome " . htmlentities($_SESSION['username']) ."</p>";?>
 		<ul>
 			<li id="title"><strong>Party Log</strong></li>
-			<li>Login</li>
+			<li><a href="login.php"><?php echo (isset($_SESSION['username'])) ? "Logout" : "Login";?></a></li>
 			<li><a href="mailto:carsonhynes@gmail.com?Subject=Party%20Log" target="_top">Contact</a></li>
 			<li>Help</li>
 		</ul>
@@ -35,7 +37,7 @@
 
 	<section id="instructions">
 	<h2>Instructions For Uploading</h2>
-	
+
 		<ol>
 			<li>Open the invite list in Google Sheets (See guidelines above)</li>
 			<li>Click "Download as -> Comma-separated Values (.csv, current sheet)</li>
@@ -51,7 +53,7 @@
 			<input type="file" name="list" id="list">
 			<input type="submit" name="submit" id="submit">
 		</form>
-		
+
 		<button id="listButton" onclick="document.getElementById('list').click()"/>
 		<button id="submitButton" onclick="document.getElementById('submit').click()"/>
 	</div>
