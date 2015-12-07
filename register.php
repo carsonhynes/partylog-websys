@@ -133,49 +133,12 @@ catch (Exception $e) {
 		<div class="ui-widget">
 			<label for="school">School:</label>
 			<select name="school" id="school">
-				<option value=""></option>
-				<option value="RPI">RPI</option>
-				<option value="Sage">Sage</option>
-				<option value="UAlbany">UAlbany</option>
-				<option value="Siena">Siena</option>
-				<option value="Hudson Valley">Hudson Valley</option>
-				<option value="Other">Other</option>
 			</select>
 		</div>
 
 		<div id="fraternityWidget" class="ui-widget">
 			<label for="fraternity">Fraternity: </label>
 			<select name="fraternity" id="fraternity">
-				<option value=""></option>
-				<option value="Acacia">Acacia</option>
-				<option value="Alpha Chi Rho">Alpha Chi Rho</option>
-				<option value="Alpha Epsilon Pi">Alpha Epsilon Pi</option>
-				<option value="Alpha Phi Alpha">Alpha Phi Alpha</option>
-				<option value="Alpha Sigma Phi">Alpha Sigma Phi</option>
-				<option value="Chi Phi">Chi Phi</option>
-				<option value="Delta Kappa Epsilon">Delta Kappa Epsilon</option>
-				<option value="Delta Phi">Delta Phi</option>
-				<option value="Delta Tau Delta">Delta Tau Delta</option>
-				<option value="Lambda Chi Alpha">Lambda Chi Alpha</option>
-				<option value="Phi Gamma Delta">Phi Gamma Delta</option>
-				<option value="Phi Iota Alpha">Phi Iota Alpha</option>
-				<option value="Phi Kappa Tau">Phi Kappa Tau</option>
-				<option value="Phi Kappa Theta">Phi Kappa Theta</option>
-				<option value="Phi Mu Delta">Phi Mu Delta</option>
-				<option value="Phi Sigma Kappa">Phi Sigma Kappa</option>
-				<option value="Pi Delta Psi">Pi Delta Psi</option>
-				<option value="Pi Kappa Alpha">Pi Kappa Alpha</option>
-				<option value="Pi Kappa Phi">Pi Kappa Phi</option>
-				<option value="Pi Lambda Phi">Pi Lambda Phi</option>
-				<option value="Psi Upsilon">Psi Upsilon</option>
-				<option value="RSE">RSE</option>
-				<option value="Sigma Alpha Epsilon">Sigma Alpha Epsilon</option>
-				<option value="Sigma Chi">Sigma Chi</option>
-				<option value="Sigma Phi Epsilon">Sigma Phi Epsilon</option>
-				<option value="Tau Epsilon Phi">Tau Epsilon Phi</option>
-				<option value="Theta Chi">Theta Chi</option>
-				<option value="Theta Xi">Theta Xi</option>
-				<option value="Zeta Psi">Zeta Psi</option>
 			</select>
 		</div>
 
