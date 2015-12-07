@@ -20,7 +20,7 @@
 		<?php session_start(); if(isset($_SESSION['username'])) echo "<p> Welcome " . $_SESSION['username'] ."</p>";?>
 		<ul>
 			<li id="title"><strong>Party Log</strong></li>
-			<li>Login</li>
+			<li><a href="login.php">Login</a></li>
 			<li><a href="mailto:carsonhynes@gmail.com?Subject=Party%20Log" target="_top">Contact</a></li>
 			<li>Help</li>
 		</ul>
