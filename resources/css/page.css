@@ -23,6 +23,13 @@ menu {
     border-bottom-right-radius: 25px;
 }
 
+menu p{
+  font-family: 'Oxygen', sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+  margin: 5px 0;
+}
+
 menu ul {
     margin: 3px 0;
     padding-left: 0;
