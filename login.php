@@ -8,7 +8,14 @@
     $pass = $configs['password'];
     $dbname = $configs['database'];
 
-    $dbconn = new PDO("mysql:$host=localhost;dbname=$dbname", $user, $pass);
+    $dbh = new PDO('mysql:host=localhost', $user, $pass);
+
+  	$result = $dbh->prepare('CREATE DATABASE IF NOT EXISTS `partylog`
+  	                            DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;');
+
+  	$result->execute();
+
+    $dbconn = new PDO("mysql:host=$host;dbname=$dbname", $user, $pass);
 
 
     $result = $dbconn->prepare('CREATE TABLE IF NOT EXISTS `users` (

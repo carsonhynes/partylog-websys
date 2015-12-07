@@ -1,11 +1,11 @@
 <?php
 $configs = include('config.php');
-$host = configs['host'];
-$user =  configs['username'];
-$pass = configs['password'];
-$dbname = configs['database'];
+$host = $configs['host'];
+$user =  $configs['username'];
+$pass = $configs['password'];
+$dbname = $configs['database'];
 
-$username = "Iota Tau";
+
 
 
 try {
