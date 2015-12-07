@@ -37,7 +37,7 @@
       unset($_SESSION['lockout']);
       if(isset($_SESSION['attempts']) && $_SESSION['attempts'] > 5)
       {
-        if($_SESSION['attempts'] > 5){
+        if($_SESSION['attempts'] > 8){
         $banned = $dbconn->prepare('INSERT INTO banned (ip) VALUES (:ip)');
         $banned->execute(array(':ip'=> $_SERVER['REMOTE_ADDR']));
         $msg = 'Your ip has been recorded and banned';
