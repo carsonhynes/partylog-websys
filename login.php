@@ -1,5 +1,7 @@
 <?php
-  session_start();
+  if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+  }
   $configs = include('config.php');
   try
   {
@@ -77,7 +79,10 @@
  <head>
    <title>Party Log - Login</title>
    <link rel="stylesheet" type="text/css" href="resources/css/pikaday.css">
+
    <link rel="stylesheet" type="text/css" href="resources/css/login.css">
+   <link rel="stylesheet" type="text/css" href="resources/css/page.css">
+   <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
    <script src="resources/js/modernizr-custom.js"></script>
 
 
@@ -85,7 +90,7 @@
 
  <body>
    <menu>
-     <?php session_start(); if(isset($_SESSION['username'])) echo "<p> Welcome " . $_SESSION['username'] ."</p>";?>
+     <?php if(isset($_SESSION['username'])) echo "<p class=\"username\"> Welcome " . htmlentities($_SESSION['username']) ."</p>";?>
      <ul>
        <li id="title"><strong>Party Log</strong></li>
        <li><a href="login.php"><?php echo (isset($_SESSION['username'])) ? "Logout" : "Login";?></a></li>
@@ -93,30 +98,36 @@
        <li>Help</li>
      </ul>
    </menu>
-   <section id="form_container">
- <h1 class="center-text">Database Lookup</h1>
- <?php if (isset($_SESSION['username'])) echo "<p> Welcome " . htmlentities($_SESSION['username']) . "</p>";
- if (isset($msg)) echo "<p id=\"info-msg\">$msg</p>"; $msg = NULL;
 
 
- if (isset($_SESSION['username'])):?>
-    <form action="login.php" method="post">
-      <input type = "submit" name="logout" value="Logout"/>
+
+
+ <?php if (isset($_SESSION['username'])):?>
+    <form action="login.php" method="post" id="logout-form">
+      <h1 class="title">Log Out</h1>
+      <?php if (isset($msg)) echo "<p class=\"err-msg\">$msg</p>"; $msg = NULL;?>
+      <input id="submit" type = "submit" name="logout" value=" "/>
     </form>
+
  <?php else: ?>
- <form action="login.php" method="post">
-   <label for="username">Username: </label>
-   <input name="username" >
-   <br>
+ <form action="login.php" method="post" id="login-form">
+   <h1 class="title">Log In</h1>
+   <?php if (isset($msg)) echo "<p class=\"err-msg\">$msg</p>"; $msg = NULL;?>
+   <div class="ui-widget">
+       <label for="name">Username:</label>
+       <input name="username" id="name" class="skipEnter"/>
+   </div>
 
-   <label for="pasword" >Password: </label>
-   <input name="password" >
-   <br>
+   <div class="ui-widget">
+       <label for="password">Password:</label>
+       <input type="password" name="password" id="password" class="skipEnter"/>
+   </div>
 
-   <input type="submit" name="login" value="Login" />
+   <input id="submit" type="submit" name="login" value=" " />
  </form>
+
  <?php endif; ?>
- </section>
+
 </body>
 
 <script src="resources/js/pikaday.js"></script>
