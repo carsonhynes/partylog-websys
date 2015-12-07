@@ -37,10 +37,10 @@ $(document).ready(function(){
 
     var COOKIE_NAME = 'splash-page-cookie';
     $go = $.cookie(COOKIE_NAME);
+    console.log("reach");
     if ($go == null) {
-        console.log("null");
         $.cookie(COOKIE_NAME, 'test', { path: '/', expires: 6 });
-        $("#splash").toggle();
+        $("#splash").show();
         var ocean = document.getElementById("splash"),
         waveWidth = 10,
         waveCount = Math.floor(window.innerWidth/waveWidth),
@@ -60,7 +60,7 @@ $(document).ready(function(){
             $("#splash").slideUp("800", function() {
                 $("#menu,form,#footer").delay(150).animate({"opacity":"1.0"},8000);
             });
-        },40000);
+        },5500);
     }
     else {
     }
