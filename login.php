@@ -155,7 +155,7 @@
     </form>
 
  <?php else: ?>
- <form action="login.php" method="post" id="login-form">
+ <form action="login.php" method="post" id="login-form" onsubmit="return validate_login(this);">
    <h1 class="title">Log In</h1>
    <?php if (isset($msg)) echo "<p class=\"err-msg\">$msg</p>"; $msg = NULL;?>
    <div class="ui-widget">
