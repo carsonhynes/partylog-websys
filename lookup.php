@@ -92,7 +92,7 @@ try {
 	<title>Party Log - Lookup</title>
 	<link rel="shortcut icon" href="resources/media/PL.ico">
 	<link rel="stylesheet" type="text/css" href="resources/css/pikaday.css">
-    <link rel="stylesheet" href="resources/css/page.css">	
+    <link rel="stylesheet" href="resources/css/page.css">
 	<link rel="stylesheet" href="resources/css/lookup.css">
 	<script src="resources/js/modernizr-custom.js"></script>
 </head>
