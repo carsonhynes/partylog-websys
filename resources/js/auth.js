@@ -47,3 +47,17 @@ function validate_register(formObj) {
 
   return true;
 }
+
+function validate_login(formObj){
+  if (formObj.name.value == "") {
+      alert("You must enter a name");
+      formObj.name.focus();
+      return false;
+  }
+
+  if (formObj.password.value == "") {
+      alert("You must enter a password");
+      formObj.password.focus();
+      return false;
+  }
+}

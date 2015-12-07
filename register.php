@@ -196,6 +196,6 @@ catch (Exception $e) {
 	<script src="resources/js/jquery-1.7.1.js"></script>
 	<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 	<script src="resources/js/pikaday.js"></script>
-	<script type="text/javascript" src="resources/js/register.js"></script>
+	<script type="text/javascript" src="resources/js/auth.js"></script>
 
 	</html>

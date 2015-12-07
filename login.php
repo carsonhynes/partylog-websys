@@ -115,52 +115,28 @@
    <?php if (isset($msg)) echo "<p class=\"err-msg\">$msg</p>"; $msg = NULL;?>
    <div class="ui-widget">
        <label for="name">Username:</label>
-       <input name="username" id="name" class="skipEnter"/>
+       <input name="username" id="name" class="skipEnter login-field"/>
    </div>
 
    <div class="ui-widget">
        <label for="password">Password:</label>
-       <input type="password" name="password" id="password" class="skipEnter"/>
+       <input type="password" name="password" id="password" class="skipEnter login-field"/>
    </div>
 
-   <input id="submit" type="submit" name="login" value=" " />
+   <section>
+     <input id="submit" type="submit" name="login" value=" " />
+     <button ><a id="register" class="button" href="register.php">Sign up</a></button>
+   </section>
  </form>
 
  <?php endif; ?>
 
 </body>
 
+
+<script src="resources/js/jquery-1.7.1.js"></script>
+<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script src="resources/js/pikaday.js"></script>
-<script>
-
-  function validate(formObj) {
-    if (formObj.date.value == "" && formObj.type.value == "date") {
-      alert("You must enter a select a date");
-      formObj.date.focus();
-      return false;
-    }
-
-    if (formObj.frat.value == "" && formObj.type.value == "frat") {
-      alert("You must enter a enter a fraternity name");
-      formObj.frat.focus();
-      return false;
-    }
-
-    if (formObj.person.value == "" && formObj.type.value == "person") {
-      alert("You must enter a enter a person's name");
-      formObj.person.focus();
-      return false;
-    }
-
-    if (formObj.person.value == "" && formObj.date.value == "" && formObj.frat.value == "") {
-      alert("You must select a form of lookup");
-      return false;
-    }
-
-    return true;
-  }
-
-
-</script>
+<script type="text/javascript" src="resources/js/auth.js"></script>
 
 </html>
