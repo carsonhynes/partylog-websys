@@ -2,6 +2,36 @@
   if (session_status() == PHP_SESSION_NONE) {
     session_start();
   }
+
+  function attempt()
+  {
+    if (!isset($_SESSION['lockout'])){
+      if (isset($_SESSION['attempt-time']) && (time() - intval($_SESSION['attempt-time']) > 90))
+  	  {
+  		  $_SESSION['attempts'] = 0;
+  		  $_SESSION['attempt-time'] = time();
+  	  }
+  	  if(!isset($_SESSION['attempts']))
+  	  {
+  		  $_SESSION['attempts'] = 0;
+  	  }
+  	  else {
+  		  $_SESSION['attempts']++;
+  	  }
+  	  if(isset($_SESSION['attempts']) && $_SESSION['attempts'] > 5)
+      {
+  	    $_SESSION['attempts'] = 0;
+  	    $_SESSION['lockout'] = time();
+  	  }
+  }
+  else {
+    if (time() - intval($_SESSION['lockout']) > 30){
+      unset($_SESSION['lockout']);
+    }
+  }
+  $_SESSION['attempt-time'] = time();
+}
+
   $configs = include('config.php');
   try
   {
@@ -41,6 +71,14 @@
 
   if (isset($_POST['login']) && isset($_POST['password']))
   {
+    attempt();
+    if(isset($_SESSION['lockout']))
+		{
+			if(time() - $_SESSION['lockout'] > 30){
+        $_SESSION['attempts'] = 0;
+				unset($_SESSION['lockout']);
+			}
+		}
     $select_salt = $dbconn->prepare('SELECT salt FROM users WHERE username = :username');
     $select_salt->execute(array(':username' => $_POST['username']));
     $res = $select_salt->fetch();
@@ -51,26 +89,33 @@
 
     $stmt = $dbconn->prepare('SELECT * FROM users WHERE username=:username AND password = :password');
     $stmt->execute(array(':username' => $_POST['username'], ':password' => $hashed_salt));
-
-    if ($user = $stmt->fetch())
-    {
-      $_SESSION['username'] = $user['username'];
-      $_SESSION['uid'] = $user['id'];
-      $_SESSION['frat'] = $user['frat'];
-      //add in session data for social organization
-      $msg = 'Succesfully Logged in';
-      header('Location: index.php');
-      exit();
+    if (!isset($_SESSION['lockout'])){
+      if ($user = $stmt->fetch())
+      {
+        $_SESSION['username'] = $user['username'];
+        $_SESSION['uid'] = $user['id'];
+        $_SESSION['frat'] = $user['frat'];
+        //add in session data for social organization
+        $msg = 'Succesfully Logged in';
+        unset($_SESSION['attempts']);
+        unset($_SESSION['attempt-time']);
+        unset($_SESSION['lockout']);
+        header('Location: index.php');
+        exit();
+      }
+      else
+      {
+        $msg = 'Wrong username or password';
+      }
     }
-    else
-    {
-      $msg = 'Wrong username or password';
+    else{
+      $msg = "Locked out. Please wait " . (30 - (time() - intval($_SESSION['lockout']))) . " seconds and try again.";
     }
   }
   if(isset($_POST['logout']) && isset($_SESSION['username']))
   {
-    $_SESSION['username'] = NULL;
-    $_SESSION['uuid'] = NULL;
+    unset($_SESSION['username']);
+    unset($_SESSION['uuid']);
     $msg = "You have been logged out.";
   }
  ?>
@@ -105,7 +150,7 @@
  <?php if (isset($_SESSION['username'])):?>
     <form action="login.php" method="post" id="logout-form">
       <h1 class="title">Log Out</h1>
-      <?php if (isset($msg)) echo "<p class=\"err-msg\">$msg</p>"; $msg = NULL;?>
+      <?php if (isset($msg)) echo "<p class=\"err-msg\">$msg</p>"; $msg = NULL; ?>
       <input id="submit" type = "submit" name="logout" value=" "/>
     </form>
 

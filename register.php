@@ -4,12 +4,41 @@ $host = $configs['host'];
 $user =  $configs['username'];
 $pass = $configs['password'];
 $dbname = $configs['database'];
+if (session_status() == PHP_SESSION_NONE) {
+	session_start();
+}
 
-
+function attempt()
+{
+	if (!isset($_SESSION['lockout'])){
+		if (isset($_SESSION['attempt-time']) && (time() - intval($_SESSION['attempt-time']) > 90))
+		{
+			$_SESSION['attempts'] = 0;
+			$_SESSION['attempt-time'] = time();
+		}
+		if(!isset($_SESSION['attempts']))
+		{
+			$_SESSION['attempts'] = 0;
+		}
+		else {
+			$_SESSION['attempts']++;
+		}
+		if(isset($_SESSION['attempts']) && $_SESSION['attempts'] > 5)
+		{
+			$_SESSION['attempts'] = 0;
+			$_SESSION['lockout'] = time();
+		}
+	}
+	else {
+		if (time() - intval($_SESSION['lockout']) > 30){
+			unset($_SESSION['lockout']);
+		}
+	}
+	$_SESSION['attempt-time'] = time();
+}
 
 
 try {
-
 	$dbh = new PDO("mysql:host=$host", $user, $pass);
 
 	$result = $dbh->prepare('CREATE DATABASE IF NOT EXISTS `partylog`
@@ -32,9 +61,18 @@ try {
 							');
 
 	$result->execute();
+	attempt();
 	if (isset($_POST['register']) && !isset($_SESSION['username'])){
-		if(isset($_POST['username']))
+		if(isset($_SESSION['lockout']))
 		{
+			if(time() - $_SESSION['lockout'] > 30){
+        $_SESSION['attempts'] = 0;
+				unset($_SESSION['lockout']);
+			}
+		}
+		if(isset($_POST['username']) && !isset($_SESSION['lockout']))
+		{
+
 			$stmt = $dbh->prepare("SELECT id FROM users WHERE username = :username");
 			$stmt->execute(array(':username' => $_POST['username']));
 			if ($user = $stmt->fetch())
@@ -60,11 +98,16 @@ try {
 																':salt' => $salt, ':school' => $_POST['school'],
 																':frat' => $_POST['fraternity'], ':phone' => intval($_POST['phoneNumber']),
 																':over' => (isset($_POST['over']) ? "over" : "under")));
-
+					unset($_SESSION['attempts']);
+					unset($_SESSION['attempt-time']);
+					unset($_SESSION['lockout']);
 					header('Location: login.php');
 					exit();
 				}
 			}
+		}
+		else if(isset($_SESSION['lockout'])){
+			$msg = "Locked out. Please wait " . (30 - (time() - intval($_SESSION['lockout']))) . " seconds and try again.";
 		}
 	}
 	else if (isset($_SESSION['username']))
@@ -95,7 +138,7 @@ catch (Exception $e) {
 
 	<body>
 		<menu>
-			<?php session_start(); if(isset($_SESSION['username'])) echo "<p> Welcome " . htmlentities($_SESSION['username']) ."</p>";?>
+			<?php if(isset($_SESSION['username'])) echo "<p> Welcome " . htmlentities($_SESSION['username']) ."</p>";?>
 			<ul>
 				<li id="title"><strong>Party Log</strong></li>
 				<li><a href="login.php"><?php echo (isset($_SESSION['username'])) ? "Logout" : "Login";?></a></li>
