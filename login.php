@@ -4,11 +4,20 @@
   }
 
   function attempt()
-  {
-    if (!isset($_SESSION['lockout'])){
+  {  
+     $configs = include('config.php');
+    $host = $configs['host'];
+    $user =  $configs['username'];
+    $pass = $configs['password'];
+    $dbname = $configs['database'];
+
+    $dbconn = new PDO("mysql:host=$host;dbname=$dbname", $user, $pass);
+     $notAllowed = $dbconn->prepare('SELECT ip FROM banned WHERE ip = :ip');
+     $notAllowed->execute(array(':ip' =>$_SERVER['REMOTE_ADDR']));
+  
+      if (!isset($_SESSION['lockout']) && $notAllowed->rowCount() ==0){
       if (isset($_SESSION['attempt-time']) && (time() - intval($_SESSION['attempt-time']) > 90))
   	  {
-  		  $_SESSION['attempts'] = 0;
   		  $_SESSION['attempt-time'] = time();
   	  }
   	  if(!isset($_SESSION['attempts']))
@@ -20,13 +29,20 @@
   	  }
   	  if(isset($_SESSION['attempts']) && $_SESSION['attempts'] > 5)
       {
-  	    $_SESSION['attempts'] = 0;
   	    $_SESSION['lockout'] = time();
   	  }
   }
   else {
-    if (time() - intval($_SESSION['lockout']) > 30){
+    if ($notAllowed->rowCount() == 0 &&time() - intval($_SESSION['lockout']) > 30 ){
       unset($_SESSION['lockout']);
+      if(isset($_SESSION['attempts']) && $_SESSION['attempts'] > 5)
+      {
+        if($_SESSION['attempts'] > 8){
+        $banned = $dbconn->prepare('INSERT INTO banned (ip) VALUES (:ip)');
+        $banned->execute(array(':ip'=> $_SERVER['REMOTE_ADDR']));
+        $msg = 'Your ip has been recorded and banned';
+        }
+      }
     }
   }
   $_SESSION['attempt-time'] = time();
@@ -47,8 +63,13 @@
 
   	$result->execute();
 
-    $dbconn = new PDO("mysql:host=$host;dbname=$dbname", $user, $pass);
 
+    $dbconn = new PDO("mysql:host=$host;dbname=$dbname", $user, $pass);
+     $banned = $dbconn->prepare('CREATE TABLE IF NOT EXISTS `banned` (
+                  `ip` varchar(45 ) NOT NULL,
+                  PRIMARY KEY (`ip`));
+                ');
+    $banned->execute();
 
     $result = $dbconn->prepare('CREATE TABLE IF NOT EXISTS `users` (
   								`id` int(11) NOT NULL AUTO_INCREMENT,
@@ -75,7 +96,7 @@
     if(isset($_SESSION['lockout']))
 		{
 			if(time() - $_SESSION['lockout'] > 30){
-        $_SESSION['attempts'] = 0;
+        $_SESSION['attempts']--;
 				unset($_SESSION['lockout']);
 			}
 		}
@@ -89,7 +110,12 @@
 
     $stmt = $dbconn->prepare('SELECT * FROM users WHERE username=:username AND password = :password');
     $stmt->execute(array(':username' => $_POST['username'], ':password' => $hashed_salt));
-    if (!isset($_SESSION['lockout'])){
+    $notAllowed = $dbconn->prepare('SELECT ip FROM banned WHERE ip = :ip');
+    $notAllowed->execute(array(':ip' =>$_SERVER['REMOTE_ADDR']));
+    if($notAllowed->rowCount() >0){
+      $msg = "You are banned and cannot attempt login";
+    }
+    else if (!isset($_SESSION['lockout'])){
       if ($user = $stmt->fetch())
       {
         $_SESSION['username'] = $user['username'];
