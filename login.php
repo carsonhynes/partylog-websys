@@ -124,8 +124,8 @@
    </div>
 
    <section>
-     <input id="submit" type="submit" name="login" value=" " />
      <button ><a id="register" class="button" href="register.php">Sign up</a></button>
+     <input id="submit" type="submit" name="login" value=" " />
    </section>
  </form>
 
