@@ -19,10 +19,10 @@
 <menu>
 	<?php session_start(); if(isset($_SESSION['username'])) echo "<p> Welcome " . htmlentities($_SESSION['username']) ."</p>";?>
 	<ul>
-		<li id="title"><strong>Party Log</strong></li>
+		<li id="title"><strong><a href="index.php">Party Log</a></strong></li>
 		<li><a href="login.php"><?php echo (isset($_SESSION['username'])) ? "Logout" : "Login";?></a></li>
 		<li><a href="mailto:carsonhynes@gmail.com?Subject=Party%20Log" target="_top">Contact</a></li>
-		<li>Help</li>
+		<?php if(isset($_SESSION['username'])) echo "<li><a href='upload.php'>Upload</a><li><li><a href='lookup.php'>Lookup</a><li>";?>
 	</ul>
 </menu>
 
