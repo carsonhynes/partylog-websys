@@ -85,6 +85,7 @@ catch (Exception $e) {
 	<html>
 	<head>
 		<title>Party Log - Lookup</title>
+		<link rel="shortcut icon" href="resources/media/PL.ico">
 		<link rel="stylesheet" type="text/css" href="resources/css/pikaday.css">
 		<link rel="stylesheet" type="text/css" href="resources/css/index.css">
 		<link rel="stylesheet" type="text/css" href="resources/css/register.css">

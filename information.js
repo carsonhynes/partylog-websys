@@ -1,161 +1,161 @@
 {
 	"schools": [
 		{
-			"value": "",
+			"name": "",
 			"school": ""
 		},
 		{
-			"value": "RPI",
+			"name": "RPI",
 			"school": "RPI"
 		},
 		{
-			"value": "Sage",
+			"name": "Sage",
 			"school": "Sage"
 		},
 		{
-			"value": "UAlbany",
+			"name": "UAlbany",
 			"school": "UAlbany"
 		},
 		{
-			"value": "Siena",
+			"name": "Siena",
 			"school": "Siena"
 		},
 		{
-			"value": "Hudson Valley",
+			"name": "Hudson Valley",
 			"school": "Hudson Valley"
 		},
 		{
-			"value": "Other",
+			"name": "Other",
 			"school": "Other"
 		}
 	],
 	"fraternities": [
 		{
-			"value": "None",
+			"name": "None",
 			"fraternity": "Non-Greek"
 		},
 		{
-			"value": "Acacia",
+			"name": "Acacia",
 			"fraternity": "Acacia"
 		},
 		{
-			"value": "Alpha Chi Rho",
+			"name": "Alpha Chi Rho",
 			"fraternity": "Alpha Chi Rho"
 		},
 		{
-			"value": "Alpha Epsilon Pi",
+			"name": "Alpha Epsilon Pi",
 			"fraternity": "Alpha Epsilon Pi"
 		},
 		{
-			"value": "Alpha Phi Alpha",
+			"name": "Alpha Phi Alpha",
 			"fraternity": "Alpha Phi Alpha"
 		},
 		{
-			"value": "Alpha Sigma Phi",
+			"name": "Alpha Sigma Phi",
 			"fraternity": "Alpha Sigma Phi"
 		},
 		{
-			"value": "Chi Phi",
+			"name": "Chi Phi",
 			"fraternity": "Chi Phi"
 		},
 		{
-			"value": "Delta Kappa Epsilon",
+			"name": "Delta Kappa Epsilon",
 			"fraternity": "Delta Kappa Epsilon"
 		},
 		{
-			"value": "Delta Phi",
+			"name": "Delta Phi",
 			"fraternity": "Delta Phi"
 		},
 		{
-			"value": "Delta Tau Delta",
+			"name": "Delta Tau Delta",
 			"fraternity": "Delta Tau Delta"
 		},
 		{
-			"value": "Lambda Chi Alpha",
+			"name": "Lambda Chi Alpha",
 			"fraternity": "Lambda Chi Alpha"
 		},
 		{
-			"value": "Lambda Upsilon Lambda",
+			"name": "Lambda Upsilon Lambda",
 			"fraternity": "Lambda Upsilon Lambda"
 		},
 		{
-			"value": "Phi Gamma Delta",
+			"name": "Phi Gamma Delta",
 			"fraternity": "Phi Gamma Delta"
 		},
 		{
-			"value": "Phi Iota Alpha",
+			"name": "Phi Iota Alpha",
 			"fraternity": "Phi Iota Alpha"
 		},
 		{
-			"value": "Phi Kappa Tau",
+			"name": "Phi Kappa Tau",
 			"fraternity": "Phi Kappa Tau"
 		},
 		{
-			"value": "Phi Kappa Theta",
+			"name": "Phi Kappa Theta",
 			"fraternity": "Phi Kappa Theta"
 		},
 		{
-			"value": "Phi Mu Delta",
+			"name": "Phi Mu Delta",
 			"fraternity": "Phi Mu Delta"
 		},
 		{
-			"value": "Phi Sigma Kappa",
+			"name": "Phi Sigma Kappa",
 			"fraternity": "Phi Sigma Kappa"
 		},
 		{
-			"value": "Pi Delta Psi",
+			"name": "Pi Delta Psi",
 			"fraternity": "Pi Delta Psi"
 		},
 		{
-			"value": "Pi Kappa Alpha",
+			"name": "Pi Kappa Alpha",
 			"fraternity": "Pi Kappa Alpha"
 		},
 		{
-			"value": "Pi Kappa Phi",
+			"name": "Pi Kappa Phi",
 			"fraternity": "Pi Kappa Phi"
 		},
 		{
-			"value": "Pi Lambda Phi",
+			"name": "Pi Lambda Phi",
 			"fraternity": "Pi Lambda Phi"
 		},
 		{
-			"value": "Psi Upsilon",
+			"name": "Psi Upsilon",
 			"fraternity": "Psi Upsilon"
 		},
 		{
-			"value": "RSE",
+			"name": "RSE",
 			"fraternity": "RSE"
 		},
 		{
-			"value": "Sigma Alpha Epsilon",
+			"name": "Sigma Alpha Epsilon",
 			"fraternity": "Sigma Alpha Epsilon"
 		},
 		{
-			"value": "Sigma Chi",
+			"name": "Sigma Chi",
 			"fraternity": "Sigma Chi"
 		},
 		{
-			"value": "Sigma Alpha Epsilon",
+			"name": "Sigma Alpha Epsilon",
 			"fraternity": "Sigma Alpha Epsilon"
 		},
 		{
-			"value": "Sigma Phi Epsilon",
+			"name": "Sigma Phi Epsilon",
 			"fraternity": "Sigma Phi Epsilon"
 		},
 		{
-			"value": "Tau Epsilon Phi",
+			"name": "Tau Epsilon Phi",
 			"fraternity": "Tau Epsilon Phi"
 		},
 		{
-			"value": "Theta Chi",
+			"name": "Theta Chi",
 			"fraternity": "Theta Chi"
 		},
 		{
-			"value": "Theta Xi",
+			"name": "Theta Xi",
 			"fraternity": "Theta Xi"
 		},
 		{
-			"value": "Zeta Psi",
+			"name": "Zeta Psi",
 			"fraternity": "Zeta Psi"
 		}
 	]
