@@ -19,6 +19,21 @@ function test_input($data) {
 	return $data;
 }
 
+
+
+
+//ensure party and frat exists
+$frat = "'";
+$sc = "'";
+$frat .= test_input($_POST["fraternity"]);
+$sc .= test_input($_POST["school"]);
+$frat .= "'";
+$sc .= "'";
+
+$result = $mysqli->prepare("SELECT * FROM fraternity, school WHERE fraternity.name = $frat AND school.name = $sc");
+$result->execute();
+if($result->num_rows > 0 ){
+
 $q .= test_input($_POST["name"]) . "', '";
 $q .= test_input($_POST["fraternity"]) . "', '";
 $q .= test_input($_POST["school"]) . "', '";
@@ -104,3 +119,4 @@ echo $q;
 			}
 
 		}
+	}

@@ -123,8 +123,8 @@
  <html>
  <head>
    <title>Party Log - Login</title>
+   <link rel="shortcut icon" href="resources/media/PL.ico">
    <link rel="stylesheet" type="text/css" href="resources/css/pikaday.css">
-
    <link rel="stylesheet" type="text/css" href="resources/css/login.css">
    <link rel="stylesheet" type="text/css" href="resources/css/page.css">
    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
