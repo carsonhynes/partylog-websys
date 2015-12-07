@@ -11,6 +11,7 @@ $(document).ready(function(){
     url: "information.js",
     dataType: "json",
     success: function(responseData, status){
+        console.log("reach");
     var outputSchool = "";
     var outputFraternity = "";
        $.each(responseData.schools, function(i, item) {
@@ -34,6 +35,7 @@ $(document).ready(function(){
         alert("There was a problem: "+xhr.status+" "+thrownError);
         }
     });
+
     var COOKIE_NAME = 'splash-page-cookie';
     $go = $.cookie(COOKIE_NAME);
     if ($go == null) {

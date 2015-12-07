@@ -1,3 +1,7 @@
+.title {
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
 #login-form {
 	position: relative;
 	background: rgba(228,228,228,0.92);

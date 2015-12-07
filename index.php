@@ -84,6 +84,6 @@
 		while (result != userpin) {
 			result = prompt('Please show your id to the host');
 		}
-	}
+	});
 </script>
 </html>
