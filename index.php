@@ -61,7 +61,7 @@
 	</div>
 
 	<div class="checkbox">
-		<input type = "checkbox" id="over" name="over" />
+		<input type="checkbox" id="over" name="over" />
 		<label for="over">Over 21<span></span></label>
 	</div>
 
@@ -88,4 +88,13 @@
 <script src="list.js"></script>
 <script type="text/javascript" src="resources/js/index.js"></script>
 <script type="text/javascript" src="resources/js/carhartl-jquery-cookie-92b7715/jquery.cookie.js" ></script>
+<script>
+	var userpin = '0000';
+	var result = '-1';
+	$('#over').click(function () {
+		while (result != userpin) {
+			result = prompt('Please show your id to the host');
+		}
+	}
+</script>
 </html>
