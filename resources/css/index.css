@@ -102,11 +102,8 @@ body {
 }
 
 form {
-	position: relative;
 	background: rgba(228,228,228,0.92);
-	border-style: solid;
 	border-radius: 25px;
-	border-width: 3px;
 	padding: 5px;
 	height: 375px;
 	width: 722px;
@@ -115,13 +112,13 @@ form {
 
 form div {
 	font-family: 'Source Sans Pro', sans-serif;
-	font-size: 30px;
+	font-size: 28px;
 	opacity: 1.0;
 }
 
 form label{
 	font-family: 'Source Sans Pro', sans-serif;
-	font-size: 30px;
+	font-size: 26px;
 	display: inline-block;
   float: left;
   clear: left;
@@ -135,21 +132,19 @@ form input,form select[name="fraternity"], form select[name="school"]{
 }
 
 input {
-    width: 300px;
+    width: 350px;
+    margin-bottom: 10px;
 }
 
 select {
-	width: 300px;
-}
-
-.checkbox {
-	text-align: left;
+	width: 350px;
+  margin-bottom: 10px;
 }
 
 .checkbox label{
 	position: absolute;
-	bottom: 30px;
-  left: 30px;
+	bottom: 20px;
+  left: 350px;
 }
 input[type="checkbox"] {
     display:none;
@@ -185,15 +180,15 @@ input[type="checkbox"]:checked + label span {
 
 .submit {
   position: absolute;
-  bottom: 30px;
-  right: 80px;
+  bottom: 20px;
+  right: 425px;
 }
 
 .submit button {
   background-image: url("../media/submit.png");
   background-repeat: no-repeat;
   background-position: 50% 50%;
-  height: 100px;
+  height: 75px;
   width: 100px;
   border: none;
   border-style: solid;

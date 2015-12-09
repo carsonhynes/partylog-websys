@@ -18,10 +18,10 @@
 <menu>
 	<?php session_start(); if(isset($_SESSION['username'])) echo "<p> Welcome " . $_SESSION['username'] ."</p>";?>
 	<ul>
-		<li id="title"><strong>Party Log</strong></li>
+		<li id="title"><strong><a href="index.php">Party Log</a></strong></li>
 		<li><a href="login.php"><?php echo (isset($_SESSION['username'])) ? "Logout" : "Login";?></a></li>
 		<li><a href="mailto:carsonhynes@gmail.com?Subject=Party%20Log" target="_top">Contact</a></li>
-		<li>Help</li>
+		<?php if(isset($_SESSION['username'])) echo "<li><a href='upload.php'>Upload</a><li><li><a href='lookup.php'>Lookup</a><li>";?>
 	</ul>
 </menu>
 <div id="form-wrapper">
@@ -86,7 +86,8 @@
 
 <script src="resources/js/jquery-1.7.1.js"></script>
 <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-<script type="text/javascript" src="resources/js/index.js"></script>
+<script src="resources/misc/list.js"></script>
+<script src="resources/js/index.js"></script>
 <script type="text/javascript" src="resources/js/carhartl-jquery-cookie-92b7715/jquery.cookie.js" ></script>
 <script>
 	var userpin = '0000';

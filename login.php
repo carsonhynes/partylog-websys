@@ -37,7 +37,7 @@
       unset($_SESSION['lockout']);
       if(isset($_SESSION['attempts']) && $_SESSION['attempts'] > 5)
       {
-        if($_SESSION['attempts'] > 5){
+        if($_SESSION['attempts'] > 8){
         $banned = $dbconn->prepare('INSERT INTO banned (ip) VALUES (:ip)');
         $banned->execute(array(':ip'=> $_SERVER['REMOTE_ADDR']));
         $msg = 'Your ip has been recorded and banned';
@@ -160,18 +160,15 @@
  </head>
 
  <body>
-   <menu>
-     <?php if(isset($_SESSION['username'])) echo "<p class=\"username\"> Welcome " . htmlentities($_SESSION['username']) ."</p>";?>
-     <ul>
-       <li id="title"><strong>Party Log</strong></li>
-       <li><a href="login.php"><?php echo (isset($_SESSION['username'])) ? "Logout" : "Login";?></a></li>
-       <li><a href="mailto:carsonhynes@gmail.com?Subject=Party%20Log" target="_top">Contact</a></li>
-       <li>Help</li>
-     </ul>
-   </menu>
-
-
-
+  <menu>
+    <?php if(isset($_SESSION['username'])) echo "<p> Welcome " . htmlentities($_SESSION['username']) ."</p>";?>
+    <ul>
+      <li id="title"><strong><a href="index.php">Party Log</a></strong></li>
+      <li><a href="login.php"><?php echo (isset($_SESSION['username'])) ? "Logout" : "Login";?></a></li>
+      <li><a href="mailto:carsonhynes@gmail.com?Subject=Party%20Log" target="_top">Contact</a></li>
+      <?php if(isset($_SESSION['username'])) echo "<li><a href='upload.php'>Upload</a><li><li><a href='lookup.php'>Lookup</a><li>";?>
+    </ul>
+  </menu>
 
  <?php if (isset($_SESSION['username'])):?>
     <form action="login.php" method="post" id="logout-form">
