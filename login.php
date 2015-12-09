@@ -2,7 +2,12 @@
   if (session_status() == PHP_SESSION_NONE) {
     session_start();
   }
-
+  function test_input($data) {
+  	$data = trim($data);
+  	$data = stripslashes($data);
+  	$data = htmlspecialchars($data);
+  	return $data;
+  }
   function attempt()
   {
      $configs = include('config.php');
@@ -10,7 +15,6 @@
     $user =  $configs['username'];
     $pass = $configs['password'];
     $dbname = $configs['database'];
-
     $dbconn = new PDO("mysql:host=$host;dbname=$dbname", $user, $pass);
      $notAllowed = $dbconn->prepare('SELECT ip FROM banned WHERE ip = :ip');
      $notAllowed->execute(array(':ip' =>$_SERVER['REMOTE_ADDR']));
@@ -33,7 +37,7 @@
   	  }
   }
   else {
-    if ($notAllowed->rowCount() == 0 &&time() - intval($_SESSION['lockout']) > 30 ){
+    if ($notAllowed->rowCount() == 0 && time() - intval($_SESSION['lockout']) > 30 ){
       unset($_SESSION['lockout']);
       if(isset($_SESSION['attempts']) && $_SESSION['attempts'] > 35)
       {
@@ -44,6 +48,9 @@
 
       }
       unset($_SESSION['attempts']);
+    }
+    else if (time() - intval($_SESSION['lockout']) <= 30){
+      $_SESSION['attempts']++;
     }
   }
   $_SESSION['attempt-time'] = time();
