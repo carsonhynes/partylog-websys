@@ -4,7 +4,7 @@
   }
 
   function attempt()
-  {  
+  {
      $configs = include('config.php');
     $host = $configs['host'];
     $user =  $configs['username'];
@@ -14,7 +14,7 @@
     $dbconn = new PDO("mysql:host=$host;dbname=$dbname", $user, $pass);
      $notAllowed = $dbconn->prepare('SELECT ip FROM banned WHERE ip = :ip');
      $notAllowed->execute(array(':ip' =>$_SERVER['REMOTE_ADDR']));
-  
+
       if (!isset($_SESSION['lockout']) && $notAllowed->rowCount() ==0){
       if (isset($_SESSION['attempt-time']) && (time() - intval($_SESSION['attempt-time']) > 90))
   	  {
@@ -35,14 +35,15 @@
   else {
     if ($notAllowed->rowCount() == 0 &&time() - intval($_SESSION['lockout']) > 30 ){
       unset($_SESSION['lockout']);
-      if(isset($_SESSION['attempts']) && $_SESSION['attempts'] > 5)
+      if(isset($_SESSION['attempts']) && $_SESSION['attempts'] > 35)
       {
-        if($_SESSION['attempts'] > 8){
+
         $banned = $dbconn->prepare('INSERT INTO banned (ip) VALUES (:ip)');
         $banned->execute(array(':ip'=> $_SERVER['REMOTE_ADDR']));
         $msg = 'Your ip has been recorded and banned';
-        }
+
       }
+      unset($_SESSION['attempts']);
     }
   }
   $_SESSION['attempt-time'] = time();
@@ -109,7 +110,7 @@
     $hashed_salt = hash('sha256', $salt . $raw_pass);
 
     $stmt = $dbconn->prepare('SELECT * FROM users WHERE username=:username AND password = :password');
-    $stmt->execute(array(':username' => $_POST['username'], ':password' => $hashed_salt));
+    $stmt->execute(array(':username' => test_input($_POST['username']), ':password' => $hashed_salt));
     $notAllowed = $dbconn->prepare('SELECT ip FROM banned WHERE ip = :ip');
     $notAllowed->execute(array(':ip' =>$_SERVER['REMOTE_ADDR']));
     if($notAllowed->rowCount() >0){
@@ -160,15 +161,18 @@
  </head>
 
  <body>
-  <menu>
-    <?php if(isset($_SESSION['username'])) echo "<p> Welcome " . htmlentities($_SESSION['username']) ."</p>";?>
-    <ul>
-      <li id="title"><strong><a href="index.php">Party Log</a></strong></li>
-      <li><a href="login.php"><?php echo (isset($_SESSION['username'])) ? "Logout" : "Login";?></a></li>
-      <li><a href="mailto:carsonhynes@gmail.com?Subject=Party%20Log" target="_top">Contact</a></li>
-      <?php if(isset($_SESSION['username'])) echo "<li><a href='upload.php'>Upload</a><li><li><a href='lookup.php'>Lookup</a><li>";?>
-    </ul>
-  </menu>
+   <menu>
+     <?php if(isset($_SESSION['username'])) echo "<p class=\"username\"> Welcome " . htmlentities($_SESSION['username']) ."</p>";?>
+     <ul>
+       <li id="title"><strong>Party Log</strong></li>
+       <li><a href="login.php"><?php echo (isset($_SESSION['username'])) ? "Logout" : "Login";?></a></li>
+       <li><a href="mailto:carsonhynes@gmail.com?Subject=Party%20Log" target="_top">Contact</a></li>
+       <li>Help</li>
+     </ul>
+   </menu>
+
+
+
 
  <?php if (isset($_SESSION['username'])):?>
     <form action="login.php" method="post" id="logout-form">
