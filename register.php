@@ -10,11 +10,20 @@ if (session_status() == PHP_SESSION_NONE) {
 
 function attempt()
 {
-	if (!isset($_SESSION['lockout'])){
+	 $configs = include('config.php');
+	$host = $configs['host'];
+	$user =  $configs['username'];
+	$pass = $configs['password'];
+	$dbname = $configs['database'];
+	$dbconn = new PDO("mysql:host=$host;dbname=$dbname", $user, $pass);
+	 $notAllowed = $dbconn->prepare('SELECT ip FROM banned WHERE ip = :ip');
+	 $notAllowed->execute(array(':ip' =>$_SERVER['REMOTE_ADDR']));
+
+	if (!isset($_SESSION['lockout']) && $notAllowed->rowCount() ==0){
 		if (isset($_SESSION['attempt-time']) && (time() - intval($_SESSION['attempt-time']) > 90))
 		{
-			$_SESSION['attempts'] = 0;
 			$_SESSION['attempt-time'] = time();
+			$_SESSION['attempts'] = 0;
 		}
 		if(!isset($_SESSION['attempts']))
 		{
@@ -25,16 +34,27 @@ function attempt()
 		}
 		if(isset($_SESSION['attempts']) && $_SESSION['attempts'] > 5)
 		{
-			$_SESSION['attempts'] = 0;
 			$_SESSION['lockout'] = time();
 		}
-	}
-	else {
-		if (time() - intval($_SESSION['lockout']) > 30){
-			unset($_SESSION['lockout']);
+}
+else {
+	if ($notAllowed->rowCount() == 0 && time() - intval($_SESSION['lockout']) > 30 ){
+		unset($_SESSION['lockout']);
+		if(isset($_SESSION['attempts']) && $_SESSION['attempts'] > 35)
+		{
+
+			$banned = $dbconn->prepare('INSERT INTO banned (ip) VALUES (:ip)');
+			$banned->execute(array(':ip'=> $_SERVER['REMOTE_ADDR']));
+			$msg = 'Your ip has been recorded and banned';
+
 		}
+		unset($_SESSION['attempts']);
 	}
-	$_SESSION['attempt-time'] = time();
+	else if (isset($_SESSION['lockout']) && time() - intval($_SESSION['lockout']) <= 30){
+		$_SESSION['attempts']++;
+	}
+}
+$_SESSION['attempt-time'] = time();
 }
 
 
@@ -61,16 +81,21 @@ try {
 							');
 
 	$result->execute();
-	attempt();
 	if (isset($_POST['register']) && !isset($_SESSION['username'])){
+		attempt();
 		if(isset($_SESSION['lockout']))
 		{
 			if(time() - $_SESSION['lockout'] > 30){
-        $_SESSION['attempts'] = 0;
+        $_SESSION['attempts'] --;
 				unset($_SESSION['lockout']);
 			}
 		}
-		if(isset($_POST['username']) && !isset($_SESSION['lockout']))
+		$notAllowed = $dbh->prepare('SELECT ip FROM banned WHERE ip = :ip');
+		$notAllowed->execute(array(':ip' =>$_SERVER['REMOTE_ADDR']));
+		if($notAllowed->rowCount() >0){
+			$msg = "You are banned and cannot attempt login";
+		}
+		else if(isset($_POST['username']) && !isset($_SESSION['lockout']))
 		{
 
 			$stmt = $dbh->prepare("SELECT id FROM users WHERE username = :username");
@@ -127,7 +152,7 @@ catch (Exception $e) {
 
 	<html>
 	<head>
-		<title>Party Log - Lookup</title>
+		<title>Party Log - Register</title>
 		<link rel="shortcut icon" href="resources/media/PL.ico">
 		<link rel="stylesheet" type="text/css" href="resources/css/pikaday.css">
 		<link rel="stylesheet" type="text/css" href="resources/css/index.css">
