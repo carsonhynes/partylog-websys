@@ -23,6 +23,7 @@
       if (isset($_SESSION['attempt-time']) && (time() - intval($_SESSION['attempt-time']) > 90))
   	  {
   		  $_SESSION['attempt-time'] = time();
+        $_SESSION['attempts'] = 0;
   	  }
   	  if(!isset($_SESSION['attempts']))
   	  {
