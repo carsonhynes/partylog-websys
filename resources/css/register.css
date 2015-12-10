@@ -1,5 +1,71 @@
+input[type="checkbox"] {
+    display:none;
+}
+
+input[type="checkbox"] + label span{
+   	display:inline-block;
+    width:69px;
+    height:69px;
+    margin:-1px 4px 0 0;
+    vertical-align:middle;
+    background:url("../media/checkbox.png") left top no-repeat;
+    cursor:pointer;
+}
+
+input[type="checkbox"]:checked + label span {
+    background:url("../media/checkbox.png") -85px top no-repeat;
+}
+
+.date {
+	margin: 25px 0;
+	text-align: center;
+	width: 367px;
+}
+
+.ui-widget {
+	margin-top: 10px;
+}
+
+#fraternityWidget {
+	display: none;
+}
+
+body {
+	position: relative;
+
+	background-image: url("../media/Greek Letters Painted-01.jpg");
+	background-position: center;
+	background-size: cover;
+	z-index: -1;
+}
+
+input {
+    width: 350px;
+    margin-bottom: 10px;
+}
+
+select {
+	width: 350px;
+  margin-bottom: 10px;
+}
+
 form {
-  height: 575px;
+  height: 590px;
+  background: rgba(228,228,228,0.92);
+  border-radius: 25px;
+  padding: 5px;
+  width: 722px;
+  margin: 230px auto 0;
+}
+
+form label{
+	font-family: 'Source Sans Pro', sans-serif;
+	font-size: 26px;
+	display: inline-block;
+  float: left;
+  clear: left;
+  width: 250px;
+  text-align: right;
 }
 
 form h1{
@@ -12,8 +78,7 @@ form h1{
 }
 
 .checkbox label{
-  position: absolute;
-  bottom: 40px;
+  position: relative;
 }
 
 .submit #register{
@@ -34,4 +99,18 @@ form h1{
   margin: 0;
   font-size: 16px;
   color: red;
+}
+
+form section {
+	font-family: 'Source Sans Pro', sans-serif;
+	font-size: 28px;
+	opacity: 1.0;
+}
+
+#wrapper{
+  position: relative;
+}
+
+#register{
+  margin-left: 250px;
 }

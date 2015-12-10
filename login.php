@@ -2,12 +2,7 @@
   if (session_status() == PHP_SESSION_NONE) {
     session_start();
   }
-  function test_input($data) {
-  	$data = trim($data);
-  	$data = stripslashes($data);
-  	$data = htmlspecialchars($data);
-  	return $data;
-  }
+
   function attempt()
   {
      $configs = include('config.php');
@@ -15,6 +10,7 @@
     $user =  $configs['username'];
     $pass = $configs['password'];
     $dbname = $configs['database'];
+
     $dbconn = new PDO("mysql:host=$host;dbname=$dbname", $user, $pass);
      $notAllowed = $dbconn->prepare('SELECT ip FROM banned WHERE ip = :ip');
      $notAllowed->execute(array(':ip' =>$_SERVER['REMOTE_ADDR']));
@@ -23,7 +19,6 @@
       if (isset($_SESSION['attempt-time']) && (time() - intval($_SESSION['attempt-time']) > 90))
   	  {
   		  $_SESSION['attempt-time'] = time();
-        $_SESSION['attempts'] = 0;
   	  }
   	  if(!isset($_SESSION['attempts']))
   	  {
@@ -38,20 +33,16 @@
   	  }
   }
   else {
-    if ($notAllowed->rowCount() == 0 && time() - intval($_SESSION['lockout']) > 30 ){
+    if ($notAllowed->rowCount() == 0 &&time() - intval($_SESSION['lockout']) > 30 ){
       unset($_SESSION['lockout']);
-      if(isset($_SESSION['attempts']) && $_SESSION['attempts'] > 35)
+      if(isset($_SESSION['attempts']) && $_SESSION['attempts'] > 5)
       {
-
+        if($_SESSION['attempts'] > 8){
         $banned = $dbconn->prepare('INSERT INTO banned (ip) VALUES (:ip)');
         $banned->execute(array(':ip'=> $_SERVER['REMOTE_ADDR']));
         $msg = 'Your ip has been recorded and banned';
-
+        }
       }
-      unset($_SESSION['attempts']);
-    }
-    else if (time() - intval($_SESSION['lockout']) <= 30){
-      $_SESSION['attempts']++;
     }
   }
   $_SESSION['attempt-time'] = time();
@@ -118,7 +109,7 @@
     $hashed_salt = hash('sha256', $salt . $raw_pass);
 
     $stmt = $dbconn->prepare('SELECT * FROM users WHERE username=:username AND password = :password');
-    $stmt->execute(array(':username' => test_input($_POST['username']), ':password' => $hashed_salt));
+    $stmt->execute(array(':username' => $_POST['username'], ':password' => $hashed_salt));
     $notAllowed = $dbconn->prepare('SELECT ip FROM banned WHERE ip = :ip');
     $notAllowed->execute(array(':ip' =>$_SERVER['REMOTE_ADDR']));
     if($notAllowed->rowCount() >0){
@@ -169,18 +160,15 @@
  </head>
 
  <body>
-   <menu>
-     <?php if(isset($_SESSION['username'])) echo "<p class=\"username\"> Welcome " . htmlentities($_SESSION['username']) ."</p>";?>
-     <ul>
-       <li id="title"><strong>Party Log</strong></li>
-       <li><a href="login.php"><?php echo (isset($_SESSION['username'])) ? "Logout" : "Login";?></a></li>
-       <li><a href="mailto:carsonhynes@gmail.com?Subject=Party%20Log" target="_top">Contact</a></li>
-       <li>Help</li>
-     </ul>
-   </menu>
-
-
-
+  <menu>
+    <?php if(isset($_SESSION['username'])) echo "<p> Welcome " . htmlentities($_SESSION['username']) ."</p>";?>
+    <ul>
+      <li id="title"><strong><a href="index.php">Party Log</a></strong></li>
+      <li><a href="login.php"><?php echo (isset($_SESSION['username'])) ? "Logout" : "Login";?></a></li>
+      <li><a href="mailto:carsonhynes@gmail.com?Subject=Party%20Log" target="_top">Contact</a></li>
+      <?php if(isset($_SESSION['username'])) echo "<li><a href='upload.php'>Upload</a><li><li><a href='lookup.php'>Lookup</a><li>";?>
+    </ul>
+  </menu>
 
  <?php if (isset($_SESSION['username'])):?>
     <form action="login.php" method="post" id="logout-form">
@@ -193,15 +181,15 @@
  <form action="login.php" method="post" id="login-form" onsubmit="return validate_login(this);">
    <h1 class="title">Log In</h1>
    <?php if (isset($msg)) echo "<p class=\"err-msg\">$msg</p>"; $msg = NULL;?>
-   <div class="ui-widget">
+   <section class="ui-widget">
        <label for="name">Username:</label>
        <input name="username" id="name" class="skipEnter login-field"/>
-   </div>
+   </section>
 
-   <div class="ui-widget">
+   <section class="ui-widget">
        <label for="password">Password:</label>
        <input type="password" name="password" id="password" class="skipEnter login-field"/>
-   </div>
+   </section>
 
    <section>
      <button ><a id="register" class="button" href="register.php">Sign up</a></button>

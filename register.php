@@ -155,7 +155,6 @@ catch (Exception $e) {
 		<title>Party Log - Register</title>
 		<link rel="shortcut icon" href="resources/media/PL.ico">
 		<link rel="stylesheet" type="text/css" href="resources/css/pikaday.css">
-		<link rel="stylesheet" type="text/css" href="resources/css/index.css">
 		<link rel="stylesheet" type="text/css" href="resources/css/register.css">
 		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 		<link rel="stylesheet" type="text/css" href="resources/css/page.css">
@@ -175,51 +174,51 @@ catch (Exception $e) {
 
 	<form action="register.php" method="post" onsubmit="return validate_register(this);">
 
-		<div id="wrapper">
+		<section id="wrapper">
 			<h1 class="center-text">Sign Up</h1>
 			<?php if (isset($msg)) echo "<p class=\"err-msg\">Error: $msg</p>"; $msg= NULL; ?>
-	    <div class="ui-widget">
+	    <section class="ui-widget">
 	        <label for="name">Username:</label>
 	        <input name="username" id="name" class="skipEnter"/>
-	    </div>
+	    </section>
 
-			<div class="ui-widget">
+			<section class="ui-widget">
 					<label for="password">Password:</label>
 					<input type="password" name="password" id="password" class="skipEnter"/>
-			</div>
+			</section>
 
-			<div class="ui-widget">
+			<section class="ui-widget">
 	        <label for="passwordConfirm">Confirm Password:</label>
 	        <input type="password" name="passwordConfirm" id="passwordConfirm" class="skipEnter"/>
-	    </div>
+	    </section>
 
-		<div class="ui-widget">
+		<section class="ui-widget">
 			<label for="phoneNumber">Phone Number:</label>
 			<input type="text" name="phoneNumber" id="phoneNumber" placeholder="ex: 3855550168" required pattern="^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})$"/>
-		</div>
+		</section>
 
-		<div class="ui-widget">
+		<section class="ui-widget">
 			<label for="school">School:</label>
 			<select name="school" id="school">
 			</select>
-		</div>
+		</section>
 
-		<div id="fraternityWidget" class="ui-widget">
+		<section id="fraternityWidget" class="ui-widget">
 			<label for="fraternity">Fraternity: </label>
 			<select name="fraternity" id="fraternity">
 			</select>
-		</div>
+		</section>
 
-		<div class="checkbox">
+		<section class="checkbox">
 			<input type = "checkbox" id="over" name="over" />
 			<label for="over">Over 21<span></span></label>
-		</div>
+		</section>
 
-		</div>
-		<div class="submit">
+		<section class="submit">
 
 			<input id="register" type="submit" name="register" value=" " />
-		</div>
+		</section>
+		</section>
 
 
 
