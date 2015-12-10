@@ -86,7 +86,6 @@
 		while (result != userpin) {
 			result = prompt('Please show your id to the host');
 		}
-		$('#over-label').toggleClass('checked');
 
 	});
 </script>
