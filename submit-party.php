@@ -2,8 +2,8 @@
 
 //$configs = include('config.php');
 $host = 'localhost';
-$username = 'websys';
-$password = 'websys';
+$username = 'root';
+$password = 'root';
 $database = 'partylog';
 $mysqli = new mysqli($host, $username, $password, $database);
 //$mysqli = new mysqli(configs['host'], configs['username'], configs['password'], configs['database']);
@@ -19,10 +19,41 @@ function test_input($data) {
 	return $data;
 }
 
+function sendMail($email, $name, $soberD){
+
+		$mail = new PHPMailer(true);
+
+		//Set up gmail smtp
+		$mail->IsSMTP(); // telling the class to use SMTP
+		$mail->SMTPAuth = true; // enable SMTP authentication
+		$mail->SMTPSecure = "ssl"; // sets the prefix to the servier
+		$mail->Host = "smtp.gmail.com"; // sets GMAIL as the SMTP server
+		$mail->Port = 465; // set the SMTP port for the GMAIL server
+		$mail->Username = "websysgroup8@gmail.com"; // GMAIL username
+		$mail->Password = "richardplotkarpi"; // GMAIL password
 
 
+		//create message
+		$email_from = "websysgroup8@gmail.com";
+		$name_from = "PartyLog";
+		//Typical mail data
+		$mail->AddAddress($email, $name);
+		$mail->SetFrom($email_from, $name_from);
+		$mail->Subject = "Partylog notification";
+		$mail->Body = "The sober driver number for this party is: ". $soberD;
 
-//ensure party and frat exists
+		try{
+			$mail->Send();
+			//echo "Success!";
+		} catch(Exception $e){
+			//Something went bad
+			//echo "Fail :(";
+		}
+
+	}
+
+
+//ensure school and frat exists
 $frat = "'";
 $sc = "'";
 $frat .= test_input($_POST["fraternity"]);
@@ -30,8 +61,13 @@ $sc .= test_input($_POST["school"]);
 $frat .= "'";
 $sc .= "'";
 
+
+
 $result = $mysqli->prepare("SELECT * FROM fraternity, school WHERE fraternity.name = $frat AND school.name = $sc");
 $result->execute();
+
+$result->store_result();
+
 if($result->num_rows > 0 ){
 
 $q .= test_input($_POST["name"]) . "', '";
@@ -50,9 +86,9 @@ else {
 
 echo $q;
 
-//$result = $mysqli->query("INSERT INTO party (name, fraternity, school, phone, username, over) VALUES $q");
+$result = $mysqli->query("INSERT INTO party (name, fraternity, school, phone, username, over) VALUES $q");
 
-//header("Location: index.php");
+
 
  //this sends out an sms to the phone number
 
@@ -87,36 +123,6 @@ echo $q;
 
 	}
 
-	function sendMail($email, $name, $soberD){
 
-			$mail = new PHPMailer(true);
-
-			//Set up gmail smtp
-			$mail->IsSMTP(); // telling the class to use SMTP
-			$mail->SMTPAuth = true; // enable SMTP authentication
-			$mail->SMTPSecure = "ssl"; // sets the prefix to the servier
-			$mail->Host = "smtp.gmail.com"; // sets GMAIL as the SMTP server
-			$mail->Port = 465; // set the SMTP port for the GMAIL server
-			$mail->Username = "websysgroup8@gmail.com"; // GMAIL username
-			$mail->Password = "richardplotkarpi"; // GMAIL password
-
-
-			//create message
-			$email_from = "websysgroup8@gmail.com";
-			$name_from = "PartyLog";
-			//Typical mail data
-			$mail->AddAddress($email, $name);
-			$mail->SetFrom($email_from, $name_from);
-			$mail->Subject = "Partylog notification";
-			$mail->Body = "The sober driver number for this party is: ". $soberD;
-
-			try{
-				$mail->Send();
-				//echo "Success!";
-			} catch(Exception $e){
-				//Something went bad
-				//echo "Fail :(";
-			}
-
-		}
 	}
+	header("Location: index.php");
