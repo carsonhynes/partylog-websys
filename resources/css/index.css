@@ -35,7 +35,7 @@
   	width:100px;
   	position:absolute;
   	-webkit-animation-name:             dostuff;
-  	-webkit-animation-duration:         5s; 
+  	-webkit-animation-duration:         5s;
   	-webkit-animation-iteration-count:  1;
   	-webkit-transition-timing-function: ease-in-out;
   	-webkit-animation-fill-mode: both;
@@ -105,12 +105,12 @@ form {
 	background: rgba(228,228,228,0.92);
 	border-radius: 25px;
 	padding: 5px;
-	height: 375px;
+	height: 410px;
 	width: 722px;
 	margin: 230px auto 0;
 }
 
-form div {
+form section {
 	font-family: 'Source Sans Pro', sans-serif;
 	font-size: 28px;
 	opacity: 1.0;
@@ -120,7 +120,7 @@ form label{
 	font-family: 'Source Sans Pro', sans-serif;
 	font-size: 26px;
 	display: inline-block;
-  float: left;
+  /*float: left;*/
   clear: left;
   width: 250px;
   text-align: right;
@@ -128,7 +128,7 @@ form label{
 
 form input,form select[name="fraternity"], form select[name="school"]{
   display: inline-block;
-  float: left;
+  /*float: left;*/
 }
 
 input {
@@ -141,13 +141,16 @@ select {
   margin-bottom: 10px;
 }
 
+.checkbox{
+	display: inline-block;
+}
+
 .checkbox label{
-	position: absolute;
-	bottom: 20px;
-  left: 350px;
+	position: relative;
 }
 input[type="checkbox"] {
     display:none;
+		float: none;
 }
 
 input[type="checkbox"] + label span{
@@ -179,9 +182,10 @@ input[type="checkbox"]:checked + label span {
 }
 
 .submit {
-  position: absolute;
-  bottom: 20px;
-  right: 425px;
+  position: relative;
+	bottom: 68px;
+	left: 500px;
+	width: 100px;
 }
 
 .submit button {

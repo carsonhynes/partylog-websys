@@ -11,10 +11,10 @@
 
 <body>
 
-<div id="splash">
+<section id="splash">
 	<h2 class="welcome">Welcome to Party Log</h2>
 	<img src="resources/media/logo.png">
-</div>
+</section>
 <menu>
 	<?php session_start(); if(isset($_SESSION['username'])) echo "<p> Welcome " . $_SESSION['username'] ."</p>";?>
 	<ul>
@@ -24,62 +24,52 @@
 		<?php if(isset($_SESSION['username'])) echo "<li><a href='upload.php'>Upload</a><li><li><a href='lookup.php'>Lookup</a><li>";?>
 	</ul>
 </menu>
-<div id="form-wrapper">
 
-		<div id="pin-prompt">
-
-				<div class="ui-widget">
-					<label for="pin">PIN:</label>
-					<input id="pin" name="pin" placeholder="ex. 8080" required pattern="[0-9]{4}"/>
-					<button onclick="pinValidate()">Submit</button>
-				</div>
-
-		</div>
 
 
 	<form id="submit-form"action="submit-party.php" method="post" onsubmit="return validate(this);">
 
 
-		<div class='date'>
+		<section class='date'>
 		<strong>
 			<?php
 				date_default_timezone_set("America/New_York");
 				echo date("F jS, Y");
 			?>
 		</strong>
-		</div>
+		</section>
 
-		<div id="wrapper">
-		    <div class="ui-widget">
+		<section id="wrapper">
+		    <section class="ui-widget">
 		        <label for="name">Name:</label>
         <input name="name" id="name" class="skipEnter" required pattern="^[^\s]+(\s+[^\s]+)*$"/>
-		    </div>
+		    </section>
 
-			<div class="ui-widget">
+			<section class="ui-widget">
 				<label for="phoneNumber">Phone Number:</label>
 				<input type="text" name="phoneNumber" id="phoneNumber" placeholder="ex: 3855550168" required pattern="^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})$"/>
-			</div>
+			</section>
 
-			<div class="ui-widget">
+			<section class="ui-widget">
 				<label for="school">School:</label>
 				<select name="school" id="school">
 				</select>
-			</div>
+			</section>
 
-			<div id="fraternityWidget" class="ui-widget">
+			<section id="fraternityWidget" class="ui-widget">
 				<label for="fraternity">Fraternity: </label>
 				<select name="fraternity" id="fraternity">
 				</select>
-			</div>
+			</section>
 
-			<div class="checkbox">
+			<section class="checkbox">
 				<input type="checkbox" id="over" name="over" />
-				<label for="over">Over 21<span></span></label>
-			</div>
-		</div>
-		<div class="submit">
-	        <button id="submit" style="margin-top: 10px" type="submit"><span>Submit</span></button>
-		</div>
+				<label for="over" id="over-label">Over 21<span></span></label>
+			</section>
+			<section class="submit">
+	    	<button id="submit" type="submit"><span>Submit</span></button>
+			</section>
+		</section>
 	</form>
 
 </body>
@@ -96,6 +86,8 @@
 		while (result != userpin) {
 			result = prompt('Please show your id to the host');
 		}
+		$('#over-label').toggleClass('checked');
+
 	});
 </script>
 </html>
