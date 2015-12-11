@@ -4,7 +4,7 @@
   }
 
   function attempt()
-  {  
+  {
      $configs = include('config.php');
     $host = $configs['host'];
     $user =  $configs['username'];
@@ -14,7 +14,7 @@
     $dbconn = new PDO("mysql:host=$host;dbname=$dbname", $user, $pass);
      $notAllowed = $dbconn->prepare('SELECT ip FROM banned WHERE ip = :ip');
      $notAllowed->execute(array(':ip' =>$_SERVER['REMOTE_ADDR']));
-  
+
       if (!isset($_SESSION['lockout']) && $notAllowed->rowCount() ==0){
       if (isset($_SESSION['attempt-time']) && (time() - intval($_SESSION['attempt-time']) > 90))
   	  {
@@ -181,15 +181,15 @@
  <form action="login.php" method="post" id="login-form" onsubmit="return validate_login(this);">
    <h1 class="title">Log In</h1>
    <?php if (isset($msg)) echo "<p class=\"err-msg\">$msg</p>"; $msg = NULL;?>
-   <div class="ui-widget">
+   <section class="ui-widget">
        <label for="name">Username:</label>
        <input name="username" id="name" class="skipEnter login-field"/>
-   </div>
+   </section>
 
-   <div class="ui-widget">
+   <section class="ui-widget">
        <label for="password">Password:</label>
        <input type="password" name="password" id="password" class="skipEnter login-field"/>
-   </div>
+   </section>
 
    <section>
      <button ><a id="register" class="button" href="register.php">Sign up</a></button>

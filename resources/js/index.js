@@ -1,8 +1,4 @@
-$(function() {
-     $( "#name" ).autocomplete({
-         source: names
-     });
-});
+
 
 $(document).ready(function(){
 
@@ -19,14 +15,14 @@ $(document).ready(function(){
         outputSchool += "'>";
         outputSchool += item.school;
         outputSchool += "</option>";
-      }); 
+      });
       $.each(responseData.fraternities, function(i, item) {
         outputFraternity += "<option value='";
         outputFraternity += item.name;
         outputFraternity += "'>";
         outputFraternity += item.fraternity;
         outputFraternity += "</option>";
-      });         
+      });
       $("#school").html(outputSchool);
       $("#fraternity").html(outputFraternity);
     },

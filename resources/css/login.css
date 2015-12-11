@@ -83,6 +83,13 @@ button {
   -webkit-border-radius: 30px;
 }
 
+form .ui-widget{
+  display: block;
+}
+
 form section{
   display: inline-block;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 28px;
+  opacity: 1.0;
 }
