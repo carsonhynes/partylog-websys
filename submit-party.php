@@ -1,6 +1,7 @@
 <?php
 
 //$configs = include('config.php');
+include "setup.php";
 $host = 'localhost';
 $username = 'root';
 $password = 'root';
@@ -10,7 +11,6 @@ $mysqli = new mysqli($host, $username, $password, $database);
 
 $username = isset($_SESSION['username']) ? $_SESSION['username'] : 'Empty';
 
-$q = "('";
 
 function test_input($data) {
 	$data = trim($data);
@@ -71,6 +71,7 @@ $result->store_result();
 
 if($result->num_rows > 0 ){
 
+	$q = "('";
 	$q .= test_input($_POST["name"]) . "', '";
 	$q .= test_input($_POST["fraternity"]) . "', '";
 	$q .= test_input($_POST["school"]) . "', '";
