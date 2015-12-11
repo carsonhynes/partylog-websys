@@ -1,17 +1,46 @@
- // $(function() {
- //        $( "#name" ).autocomplete({
- //            source: names
- //        });
- //    });
+$(function() {
+     $( "#name" ).autocomplete({
+         source: names
+     });
+});
 
 $(document).ready(function(){
 
-    var COOKIE_NAME = 'splash-page-cookie-test2';
+    $.ajax({
+    type: "GET",
+    url: "information.js",
+    dataType: "json",
+    success: function(responseData, status){;
+    var outputSchool = "";
+    var outputFraternity = "";
+       $.each(responseData.schools, function(i, item) {
+        outputSchool += "<option value='";
+        outputSchool += item.name;
+        outputSchool += "'>";
+        outputSchool += item.school;
+        outputSchool += "</option>";
+      }); 
+      $.each(responseData.fraternities, function(i, item) {
+        outputFraternity += "<option value='";
+        outputFraternity += item.name;
+        outputFraternity += "'>";
+        outputFraternity += item.fraternity;
+        outputFraternity += "</option>";
+      });         
+      $("#school").html(outputSchool);
+      $("#fraternity").html(outputFraternity);
+    },
+    error: function(xhr, ajaxOptions, thrownError) {
+        alert("There was a problem: "+xhr.status+" "+thrownError);
+        }
+    });
+
+    var COOKIE_NAME = 'splash-page-cookie';
     $go = $.cookie(COOKIE_NAME);
+    console.log("reach");
     if ($go == null) {
-        console.log("null");
         $.cookie(COOKIE_NAME, 'test', { path: '/', expires: 6 });
-        $("#splash").toggle();
+        $("#splash").show();
         var ocean = document.getElementById("splash"),
         waveWidth = 10,
         waveCount = Math.floor(window.innerWidth/waveWidth),
@@ -31,7 +60,7 @@ $(document).ready(function(){
             $("#splash").slideUp("800", function() {
                 $("#menu,form,#footer").delay(150).animate({"opacity":"1.0"},8000);
             });
-        },40000);
+        },5500);
     }
     else {
     }
@@ -51,14 +80,13 @@ $(document).ready(function(){
         }
     });
 
-    $("#fraternity").hide();
     $("#school").change(function () {
         var select = $('#school option:selected').text();
         if (select == "RPI") {
-            $("#fraternity").show();
+            $("#fraternityWidget").show();
         }
         else {
-            $("#fraternity").hide();
+            $("#fraternityWidget").hide();
         }
     });
 

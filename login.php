@@ -1,53 +1,105 @@
 <?php
-  session_start();
+  if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+  }
 
-  if (!isset($_SESSION['numAttempts'])){
+  function attempt()
+  {  
+     $configs = include('config.php');
+    $host = $configs['host'];
+    $user =  $configs['username'];
+    $pass = $configs['password'];
+    $dbname = $configs['database'];
 
-    $_SESSION['numAttempts'] =0;
+    $dbconn = new PDO("mysql:host=$host;dbname=$dbname", $user, $pass);
+     $notAllowed = $dbconn->prepare('SELECT ip FROM banned WHERE ip = :ip');
+     $notAllowed->execute(array(':ip' =>$_SERVER['REMOTE_ADDR']));
+  
+      if (!isset($_SESSION['lockout']) && $notAllowed->rowCount() ==0){
+      if (isset($_SESSION['attempt-time']) && (time() - intval($_SESSION['attempt-time']) > 90))
+  	  {
+  		  $_SESSION['attempt-time'] = time();
+  	  }
+  	  if(!isset($_SESSION['attempts']))
+  	  {
+  		  $_SESSION['attempts'] = 0;
+  	  }
+  	  else {
+  		  $_SESSION['attempts']++;
+  	  }
+  	  if(isset($_SESSION['attempts']) && $_SESSION['attempts'] > 5)
+      {
+  	    $_SESSION['lockout'] = time();
+  	  }
+  }
+  else {
+    if ($notAllowed->rowCount() == 0 &&time() - intval($_SESSION['lockout']) > 30 ){
+      unset($_SESSION['lockout']);
+      if(isset($_SESSION['attempts']) && $_SESSION['attempts'] > 5)
+      {
+        if($_SESSION['attempts'] > 8){
+        $banned = $dbconn->prepare('INSERT INTO banned (ip) VALUES (:ip)');
+        $banned->execute(array(':ip'=> $_SERVER['REMOTE_ADDR']));
+        $msg = 'Your ip has been recorded and banned';
+        }
+      }
     }
+  }
+  $_SESSION['attempt-time'] = time();
+}
 
+  $configs = include('config.php');
   try
   {
-    $dbname = 'partylog';
-    $user = 'root';
-    $pass = '';
-    $dbconn = new PDO('mysql:host=localhost;dbname='.$dbname, $user, $pass);
+    $host = $configs['host'];
+    $user =  $configs['username'];
+    $pass = $configs['password'];
+    $dbname = $configs['database'];
+
+    $dbh = new PDO('mysql:host=localhost', $user, $pass);
+
+  	$result = $dbh->prepare('CREATE DATABASE IF NOT EXISTS `partylog`
+  	                            DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;');
+
+  	$result->execute();
 
 
-    $result = $dbconn->prepare('CREATE TABLE IF NOT EXISTS `users` (
-                  `id` int(11) NOT NULL AUTO_INCREMENT,
-                  `username` varchar(50) NOT NULL,
-                  `salt` varchar(100) NOT NULL,
-                  `password` varchar(100) NOT NULL,
-                  `frat` varchar(50) NOT NULL,
-                  `school` varchar(50) NOT NULL,
-                  PRIMARY KEY (`id`));
-                ');
-
-    $result->execute();
-
-
+    $dbconn = new PDO("mysql:host=$host;dbname=$dbname", $user, $pass);
      $banned = $dbconn->prepare('CREATE TABLE IF NOT EXISTS `banned` (
                   `ip` varchar(45 ) NOT NULL,
                   PRIMARY KEY (`ip`));
                 ');
-
-
     $banned->execute();
+
+    $result = $dbconn->prepare('CREATE TABLE IF NOT EXISTS `users` (
+  								`id` int(11) NOT NULL AUTO_INCREMENT,
+  								`username` varchar(50) NOT NULL,
+  								`salt` varchar(100) NOT NULL,
+  								`password` varchar(100) NOT NULL,
+  								`frat` varchar(50) NOT NULL,
+  								`school` varchar(50) NOT NULL,
+  								`phone` int(11) DEFAULT NULL,
+  								PRIMARY KEY (`id`));
+                ');
+
+    $result->execute();
   }
   catch (Exception $e)
   {
     echo "Error: " . $e->getMessage();
   }
-  //Stop banned ips
-  $notAllowed = $dbconn->prepare('SELECT ip FROM banned WHERE ip = :ip');
-  $notAllowed->execute(array(':ip' =>$_SERVER['REMOTE_ADDR']));
-  if($notAllowed->rowCount() > 0){
-    $msg = 'Your ip has been recorded and banned';
-  }
 
-  else if (isset($_POST['login']) && isset($_POST['password'])){
 
+  if (isset($_POST['login']) && isset($_POST['password']))
+  {
+    attempt();
+    if(isset($_SESSION['lockout']))
+		{
+			if(time() - $_SESSION['lockout'] > 30){
+        $_SESSION['attempts']--;
+				unset($_SESSION['lockout']);
+			}
+		}
     $select_salt = $dbconn->prepare('SELECT salt FROM users WHERE username = :username');
     $select_salt->execute(array(':username' => $_POST['username']));
     $res = $select_salt->fetch();
@@ -58,37 +110,38 @@
 
     $stmt = $dbconn->prepare('SELECT * FROM users WHERE username=:username AND password = :password');
     $stmt->execute(array(':username' => $_POST['username'], ':password' => $hashed_salt));
-    
-    if($_SESSION['numAttempts'] > 5){
-       $msg = 'too many login attempts';
-      
-      $banned = $dbconn->prepare('INSERT INTO banned (ip) VALUES (:ip)');
-      $banned->execute(array(':ip'=> $_SERVER['REMOTE_ADDR']));
-
+    $notAllowed = $dbconn->prepare('SELECT ip FROM banned WHERE ip = :ip');
+    $notAllowed->execute(array(':ip' =>$_SERVER['REMOTE_ADDR']));
+    if($notAllowed->rowCount() >0){
+      $msg = "You are banned and cannot attempt login";
     }
-
-    else if ($user = $stmt->fetch()){
-
-      $_SESSION['username'] = $user['username'];
-      $_SESSION['uid'] = $user['id'];
-
-      $_SESSION['numAttempts'] = 0;
-
-      //add in session data for social organization
-      $msg = 'Succesfully Logged in';
+    else if (!isset($_SESSION['lockout'])){
+      if ($user = $stmt->fetch())
+      {
+        $_SESSION['username'] = $user['username'];
+        $_SESSION['uid'] = $user['id'];
+        $_SESSION['frat'] = $user['frat'];
+        //add in session data for social organization
+        $msg = 'Succesfully Logged in';
+        unset($_SESSION['attempts']);
+        unset($_SESSION['attempt-time']);
+        unset($_SESSION['lockout']);
+        header('Location: index.php');
+        exit();
+      }
+      else
+      {
+        $msg = 'Wrong username or password';
+      }
     }
-    else
-    {
-      $msg = 'Wrong username or password';
-      $_SESSION['numAttempts']++;
+    else{
+      $msg = "Locked out. Please wait " . (30 - (time() - intval($_SESSION['lockout']))) . " seconds and try again.";
     }
   }
-
-
   if(isset($_POST['logout']) && isset($_SESSION['username']))
   {
-    $_SESSION['username'] = NULL;
-    $_SESSION['uuid'] = NULL;
+    unset($_SESSION['username']);
+    unset($_SESSION['uuid']);
     $msg = "You have been logged out.";
   }
  ?>
@@ -96,81 +149,62 @@
  <html>
  <head>
    <title>Party Log - Login</title>
+   <link rel="shortcut icon" href="resources/media/PL.ico">
    <link rel="stylesheet" type="text/css" href="resources/css/pikaday.css">
+   <link rel="stylesheet" type="text/css" href="resources/css/login.css">
+   <link rel="stylesheet" type="text/css" href="resources/css/page.css">
+   <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
    <script src="resources/js/modernizr-custom.js"></script>
 
-   <style>
-     #dateLabel {
-       margin-right: 33px;
-     }
-     #personLabel {
-       margin-right: 20px;
-     }
-     #fratInput, #personInput, #dateInput {
-       width: 200px;
-     }
-     #dateInput {
-       margin-right: 4px;
-     }
-     .center-text {
-       text-align: center;
-       width: 300px;
-     }
-   </style>
+
  </head>
 
  <body>
+  <menu>
+    <?php if(isset($_SESSION['username'])) echo "<p> Welcome " . htmlentities($_SESSION['username']) ."</p>";?>
+    <ul>
+      <li id="title"><strong><a href="index.php">Party Log</a></strong></li>
+      <li><a href="login.php"><?php echo (isset($_SESSION['username'])) ? "Logout" : "Login";?></a></li>
+      <li><a href="mailto:carsonhynes@gmail.com?Subject=Party%20Log" target="_top">Contact</a></li>
+      <?php if(isset($_SESSION['username'])) echo "<li><a href='upload.php'>Upload</a><li><li><a href='lookup.php'>Lookup</a><li>";?>
+    </ul>
+  </menu>
 
- <h1 class="center-text">Database Lookup</h1>
- <?php if (isset($_SESSION['username'])) echo "<p> Welcome " . htmlentities($_SESSION['username']) . "</p>";
- if (isset($msg)) echo "<p>$msg</p>" ?>
- <form action="login.php" method="post">
-   <label for="username">Username: </label>
-   <input name="username" >
-   <br>
+ <?php if (isset($_SESSION['username'])):?>
+    <form action="login.php" method="post" id="logout-form">
+      <h1 class="title">Log Out</h1>
+      <?php if (isset($msg)) echo "<p class=\"err-msg\">$msg</p>"; $msg = NULL; ?>
+      <input id="submit" type = "submit" name="logout" value=" "/>
+    </form>
 
-   <label for="pasword" >Password: </label>
-   <input name="password" >
-   <br>
+ <?php else: ?>
+ <form action="login.php" method="post" id="login-form" onsubmit="return validate_login(this);">
+   <h1 class="title">Log In</h1>
+   <?php if (isset($msg)) echo "<p class=\"err-msg\">$msg</p>"; $msg = NULL;?>
+   <div class="ui-widget">
+       <label for="name">Username:</label>
+       <input name="username" id="name" class="skipEnter login-field"/>
+   </div>
 
-   <input type="submit" name="login" value="Login" />
+   <div class="ui-widget">
+       <label for="password">Password:</label>
+       <input type="password" name="password" id="password" class="skipEnter login-field"/>
+   </div>
+
+   <section>
+     <button ><a id="register" class="button" href="register.php">Sign up</a></button>
+     <input id="submit" type="submit" name="login" value=" " />
+   </section>
  </form>
- <form action="login.php" method="post">
-   <input type = "submit" name="logout" value="logout"/>
- </form>
+
+ <?php endif; ?>
+
 </body>
 
+
+<script src="resources/js/jquery-1.7.1.js"></script>
+<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script src="resources/js/pikaday.js"></script>
-<script>
-
-  function validate(formObj) {
-    if (formObj.date.value == "" && formObj.type.value == "date") {
-      alert("You must enter a select a date");
-      formObj.date.focus();
-      return false;
-    }
-
-    if (formObj.frat.value == "" && formObj.type.value == "frat") {
-      alert("You must enter a enter a fraternity name");
-      formObj.frat.focus();
-      return false;
-    }
-
-    if (formObj.person.value == "" && formObj.type.value == "person") {
-      alert("You must enter a enter a person's name");
-      formObj.person.focus();
-      return false;
-    }
-
-    if (formObj.person.value == "" && formObj.date.value == "" && formObj.frat.value == "") {
-      alert("You must select a form of lookup");
-      return false;
-    }
-
-    return true;
-  }
-
-
-</script>
+<script type="text/javascript" src="resources/js/auth.js"></script>
 
 </html>

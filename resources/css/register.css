@@ -1,0 +1,37 @@
+form {
+  height: 575px;
+}
+
+form h1{
+  text-align: center;
+  margin: 20px;
+}
+
+.ui-widget label {
+  font-size: 25px;
+}
+
+.checkbox label{
+  position: absolute;
+  bottom: 40px;
+}
+
+.submit #register{
+  background-image: url("../media/submit.png");
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  height: 100px;
+  width: 100px;
+  border: none;
+  border-style: solid;
+  border-radius: 25px;
+  border-width: 3px;
+  border-color: #E4E4E4;
+}
+
+.err-msg {
+  text-align: center;
+  margin: 0;
+  font-size: 16px;
+  color: red;
+}

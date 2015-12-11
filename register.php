@@ -1,22 +1,52 @@
 <?php
+$configs = include('config.php');
+$host = $configs['host'];
+$user =  $configs['username'];
+$pass = $configs['password'];
+$dbname = $configs['database'];
+if (session_status() == PHP_SESSION_NONE) {
+	session_start();
+}
 
-$user = "root";
-$pass = "root";
-$query = "";
-
-$username = "Iota Tau";
+function attempt()
+{
+	if (!isset($_SESSION['lockout'])){
+		if (isset($_SESSION['attempt-time']) && (time() - intval($_SESSION['attempt-time']) > 90))
+		{
+			$_SESSION['attempts'] = 0;
+			$_SESSION['attempt-time'] = time();
+		}
+		if(!isset($_SESSION['attempts']))
+		{
+			$_SESSION['attempts'] = 0;
+		}
+		else {
+			$_SESSION['attempts']++;
+		}
+		if(isset($_SESSION['attempts']) && $_SESSION['attempts'] > 5)
+		{
+			$_SESSION['attempts'] = 0;
+			$_SESSION['lockout'] = time();
+		}
+	}
+	else {
+		if (time() - intval($_SESSION['lockout']) > 30){
+			unset($_SESSION['lockout']);
+		}
+	}
+	$_SESSION['attempt-time'] = time();
+}
 
 
 try {
-
-	$dbh = new PDO('mysql:host=localhost', $user, $pass);
+	$dbh = new PDO("mysql:host=$host", $user, $pass);
 
 	$result = $dbh->prepare('CREATE DATABASE IF NOT EXISTS `partylog`
 	                            DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;');
 
 	$result->execute();
 
-	$dbh = new PDO('mysql:host=localhost;dbname=partylog', $user, $pass);
+	$dbh = new PDO("mysql:host=$host;dbname=$dbname", $user, $pass);
 
 	$result = $dbh->prepare('CREATE TABLE IF NOT EXISTS `users` (
 								`id` int(11) NOT NULL AUTO_INCREMENT,
@@ -25,13 +55,24 @@ try {
 								`password` varchar(100) NOT NULL,
 								`frat` varchar(50) NOT NULL,
 								`school` varchar(50) NOT NULL,
+								`phone` int(11) DEFAULT NULL,
+								`over` varchar(10) DEFAULT \'under\',
 								PRIMARY KEY (`id`));
 							');
 
 	$result->execute();
-	if (isset($_POST['register'])){
-		if(isset($_POST['username']))
+	attempt();
+	if (isset($_POST['register']) && !isset($_SESSION['username'])){
+		if(isset($_SESSION['lockout']))
 		{
+			if(time() - $_SESSION['lockout'] > 30){
+        $_SESSION['attempts'] = 0;
+				unset($_SESSION['lockout']);
+			}
+		}
+		if(isset($_POST['username']) && !isset($_SESSION['lockout']))
+		{
+
 			$stmt = $dbh->prepare("SELECT id FROM users WHERE username = :username");
 			$stmt->execute(array(':username' => $_POST['username']));
 			if ($user = $stmt->fetch())
@@ -39,7 +80,7 @@ try {
 				$msg = "User already exists";
 			}
 			else {
-				if (!isset($_POST['username']) || !isset($_POST['password']) || !isset($_POST['passwordConfirm']) || !isset($_POST['school']) || !isset($_POST['frat']))
+				if (!isset($_POST['username']) || !isset($_POST['password']) || !isset($_POST['passwordConfirm']) || !isset($_POST['school']) || !isset($_POST['fraternity']) || !isset($_POST['phoneNumber']))
 				{
 		      $msg = "Please fill in all form fields.";
 		    }
@@ -52,16 +93,30 @@ try {
 					$salt = hash('sha256', uniqid(mt_rand(),true));
 					$raw_pass = $_POST['password'];
 					$s_pass = hash('sha256', $salt . $raw_pass);
-					$stmt = $dbh->prepare("INSERT INTO users(username, salt, password, frat, school) VALUES (:username, :salt, :password, :frat, :school);");
-					$stmt->execute(array(':username' => $_POST['username'], ':password' => $s_pass, ':salt' => $salt, ':school' => $_POST['school'], ':frat' => $_POST['frat']));
+					$stmt = $dbh->prepare("INSERT INTO users(username, salt, password, frat, school, phone, over) VALUES (:username, :salt, :password, :frat, :school, :phone, :over);");
+					$stmt->execute(array(':username' => $_POST['username'], ':password' => $s_pass,
+																':salt' => $salt, ':school' => $_POST['school'],
+																':frat' => $_POST['fraternity'], ':phone' => intval($_POST['phoneNumber']),
+																':over' => (isset($_POST['over']) ? "over" : "under")));
+					unset($_SESSION['attempts']);
+					unset($_SESSION['attempt-time']);
+					unset($_SESSION['lockout']);
 					header('Location: login.php');
+					exit();
 				}
 			}
 		}
+		else if(isset($_SESSION['lockout'])){
+			$msg = "Locked out. Please wait " . (30 - (time() - intval($_SESSION['lockout']))) . " seconds and try again.";
+		}
+	}
+	else if (isset($_SESSION['username']))
+	{
+		$msg = $_SESSION['username'] . ", you need to log out before creating a new account.";
 	}
 }
 catch (Exception $e) {
-  echo "Error: " . $e->getMessage();
+  $msg =  "Error: " . $e->getMessage();
 }
 
 
@@ -73,142 +128,81 @@ catch (Exception $e) {
 	<html>
 	<head>
 		<title>Party Log - Lookup</title>
+		<link rel="shortcut icon" href="resources/media/PL.ico">
 		<link rel="stylesheet" type="text/css" href="resources/css/pikaday.css">
-		<script src="resources/js/modernizr-custom.js"></script>
+		<link rel="stylesheet" type="text/css" href="resources/css/index.css">
+		<link rel="stylesheet" type="text/css" href="resources/css/register.css">
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+		<link rel="stylesheet" type="text/css" href="resources/css/page.css">
 
-		<style>
-			#dateLabel {
-				margin-right: 33px;
-			}
-			#personLabel {
-				margin-right: 20px;
-			}
-			#fratInput, #personInput, #dateInput {
-				width: 200px;
-			}
-			#dateInput {
-				margin-right: 4px;
-			}
-			.center-text {
-				text-align: center;
-				width: 300px;
-			}
-		</style>
 	</head>
 
 	<body>
+		<menu>
+			<?php if(isset($_SESSION['username'])) echo "<p> Welcome " . htmlentities($_SESSION['username']) ."</p>";?>
+			<ul>
+				<li id="title"><strong>Party Log</strong></li>
+				<li><a href="login.php"><?php echo (isset($_SESSION['username'])) ? "Logout" : "Login";?></a></li>
+				<li><a href="mailto:carsonhynes@gmail.com?Subject=Party%20Log" target="_top">Contact</a></li>
+				<li>Help</li>
+			</ul>
+		</menu>
 
-	<h1 class="center-text">Database Lookup</h1>
-	<?php if (isset($msg)) echo "<p>$msg</p>" ?>
-	<form action="login.php" method="post">
-		<label for="username">Username: </label>
-		<input name="username" >
-		<br>
+	<form action="register.php" method="post" onsubmit="return validate_register(this);">
 
-		<label for="pasword" >Password: </label>
-		<input name="password" >
-		<br>
+		<div id="wrapper">
+			<h1 class="center-text">Sign Up</h1>
+			<?php if (isset($msg)) echo "<p class=\"err-msg\">Error: $msg</p>"; $msg= NULL; ?>
+	    <div class="ui-widget">
+	        <label for="name">Username:</label>
+	        <input name="username" id="name" class="skipEnter"/>
+	    </div>
 
-		<input type="submit" name="login" value="Login" />
-	</form>
-	<form action="register.php" method="post" onsubmit="return validate(this)">
+			<div class="ui-widget">
+					<label for="password">Password:</label>
+					<input type="password" name="password" id="password" class="skipEnter"/>
+			</div>
 
-		<label for="username" >Username: </label>
-		<input name="username" >
-		<br>
+			<div class="ui-widget">
+	        <label for="passwordConfirm">Confirm Password:</label>
+	        <input type="password" name="passwordConfirm" id="passwordConfirm" class="skipEnter"/>
+	    </div>
 
-		<label for="pasword" >Password: </label>
-		<input name="password" >
-		<br>
+		<div class="ui-widget">
+			<label for="phoneNumber">Phone Number:</label>
+			<input type="text" name="phoneNumber" id="phoneNumber" placeholder="ex: 3855550168" required pattern="^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})$"/>
+		</div>
 
-		<label for="paswordConfirm" >Password: </label>
-		<input name="passwordConfirm" >
-		<br>
+		<div class="ui-widget">
+			<label for="school">School:</label>
+			<select name="school" id="school">
+			</select>
+		</div>
 
-		<label for="school">School:</label>
-		<select name="school" id="school">
-			<option value=""></option>
-			<option value="RPI">RPI</option>
-			<option value="Sage">Sage</option>
-			<option value="UAlbany">UAlbany</option>
-			<option value="Siena">Siena</option>
-			<option value="Hudson Valley">Hudson Valley</option>
-			<option value="Other">Other</option>
-		</select>
+		<div id="fraternityWidget" class="ui-widget">
+			<label for="fraternity">Fraternity: </label>
+			<select name="fraternity" id="fraternity">
+			</select>
+		</div>
 
+		<div class="checkbox">
+			<input type = "checkbox" id="over" name="over" />
+			<label for="over">Over 21<span></span></label>
+		</div>
 
-		<label for="frat" id="fratLabel">Fraternity: </label>
-		<select name="frat" id="fratInput">
-			<option value=""></option>
-			<option value="Acacia">Acacia</option>
-			<option value="Alpha Chi Rho">Alpha Chi Rho</option>
-			<option value="Alpha Epsilon Pi">Alpha Epsilon Pi</option>
-			<option value="Alpha Phi Alpha">Alpha Phi Alpha</option>
-			<option value="Alpha Sigma Phi">Alpha Sigma Phi</option>
-			<option value="Chi Phi">Chi Phi</option>
-			<option value="Delta Kappa Epsilon">Delta Kappa Epsilon</option>
-			<option value="Delta Phi">Delta Phi</option>
-			<option value="Delta Tau Delta">Delta Tau Delta</option>
-			<option value="Lambda Chi Alpha">Lambda Chi Alpha</option>
-			<option value="Phi Gamma Delta">Phi Gamma Delta</option>
-			<option value="Phi Iota Alpha">Phi Iota Alpha</option>
-			<option value="Phi Kappa Tau">Phi Kappa Tau</option>
-			<option value="Phi Kappa Theta">Phi Kappa Theta</option>
-			<option value="Phi Mu Delta">Phi Mu Delta</option>
-			<option value="Phi Sigma Kappa">Phi Sigma Kappa</option>
-			<option value="Pi Delta Psi">Pi Delta Psi</option>
-			<option value="Pi Kappa Alpha">Pi Kappa Alpha</option>
-			<option value="Pi Kappa Phi">Pi Kappa Phi</option>
-			<option value="Pi Lambda Phi">Pi Lambda Phi</option>
-			<option value="Psi Upsilon">Psi Upsilon</option>
-			<option value="RSE">RSE</option>
-			<option value="Sigma Alpha Epsilon">Sigma Alpha Epsilon</option>
-			<option value="Sigma Chi">Sigma Chi</option>
-			<option value="Sigma Phi Epsilon">Sigma Phi Epsilon</option>
-			<option value="Tau Epsilon Phi">Tau Epsilon Phi</option>
-			<option value="Theta Chi">Theta Chi</option>
-			<option value="Theta Xi">Theta Xi</option>
-			<option value="Zeta Psi">Zeta Psi</option>
-		</select>
-		<br>
+		</div>
+		<div class="submit">
+
+			<input id="register" type="submit" name="register" value=" " />
+		</div>
 
 
-		<input type="submit" name="register" value="Register" />
+
 	</form>
 	</body>
-
+	<script src="resources/js/jquery-1.7.1.js"></script>
+	<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 	<script src="resources/js/pikaday.js"></script>
-	<script>
-		var picker = new Pikaday({ field: document.getElementById('dateInput') });
-
-		function validate(formObj) {
-			if (formObj.date.value == "" && formObj.type.value == "date") {
-				alert("You must enter a select a date");
-				formObj.date.focus();
-				return false;
-			}
-
-			if (formObj.frat.value == "" && formObj.type.value == "frat") {
-				alert("You must enter a enter a fraternity name");
-				formObj.frat.focus();
-				return false;
-			}
-
-			if (formObj.person.value == "" && formObj.type.value == "person") {
-				alert("You must enter a enter a person's name");
-				formObj.person.focus();
-				return false;
-			}
-
-			if (formObj.person.value == "" && formObj.date.value == "" && formObj.frat.value == "") {
-				alert("You must select a form of lookup");
-				return false;
-			}
-
-			return true;
-		}
-
-
-	</script>
+	<script type="text/javascript" src="resources/js/auth.js"></script>
 
 	</html>
