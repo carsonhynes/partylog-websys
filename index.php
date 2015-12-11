@@ -1,10 +1,12 @@
 <html>
 <head>
 	<title>Party Log - Index</title>
-	<link rel="shortcut icon" href="resources/media/PL.ico">
+	<!--    local link to the title image
+-->	<link rel="shortcut icon" href="resources/media/PL.ico">
 	<link href='https://fonts.googleapis.com/css?family=Oxygen:400,700' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<!--    local links to stylesheets   
+-->   <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="resources/css/page.css">
     <link rel="stylesheet" type="text/css" href="resources/css/index.css">
 </head>
@@ -16,7 +18,9 @@
 	<img src="resources/media/logo.png">
 </div>
 
-<menu>
+<!--  menu div for semantic meaning
+
+--><menu>
 	<?php session_start(); if(isset($_SESSION['username'])) echo "<p> Welcome " . htmlentities($_SESSION['username']) ."</p>";?>
 	<ul>
 		<li id="title"><strong><a href="index.php">Party Log</a></strong></li>
@@ -28,7 +32,8 @@
 
 <form action="submit-party.php" method="post" onsubmit="return validate(this);">
 
-	<div class='date'>
+<!-- 	date div specifically for the RPI area
+ -->	<div class='date'>
 	<strong>
 		<?php
 			date_default_timezone_set("America/New_York");
@@ -37,7 +42,8 @@
 	</strong>
 	</div>
 
-	<div id="wrapper">
+<!-- divs added to allow for styling and plugin use
+ -->	<div id="wrapper">
     <div class="ui-widget">
         <label for="name">Name:</label>
         <input name="name" id="name" class="skipEnter" required pattern="([A-z])\w+"/>
@@ -71,7 +77,8 @@
 	</div>
 </form>
 </body>
-
+<!-- links to the various Javascript files needed for verification and stying
+-->
 <script src="resources/js/jquery-1.7.1.js"></script>
 <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script type="text/javascript" src="resources/js/index.js"></script>
